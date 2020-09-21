@@ -1,0 +1,13 @@
+-------------------------------------------------------------------------------
+Test set: bl.CurrencyConverterTest
+-------------------------------------------------------------------------------
+Tests run: 2, Failures: 1, Errors: 0, Skipped: 0, Time elapsed: 0.044 sec <<< FAILURE!
+bl.CurrencyConverterTest.testConvert()  Time elapsed: 0.042 sec  <<< FAILURE!
+org.opentest4j.AssertionFailedError: expected: <1.6200000047683716> but was: <1.190000057220459>
+	at org.junit.jupiter.api.AssertionUtils.fail(AssertionUtils.java:55)
+	at org.junit.jupiter.api.AssertionUtils.failNotEqual(AssertionUtils.java:62)
+	at org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:86)
+	at org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:81)
+	at org.junit.jupiter.api.Assertions.assertEquals(Assertions.java:993)
+	at bl.CurrencyConverterTest.testConvert(CurrencyConverterTest.java:51)
+

@@ -6,5 +6,16 @@
     </head>
     <body>
         <h1>Hello World!</h1>
+        <form action="./ConverterServlet" method = "POST">
+            <input type="text"  name="inputValue" value="5" />
+            <br>
+            <select name="currency">
+                <option value="0">Dollar</option>
+                <option value="1">Pounds</option>
+                <option value="2">Yuan</option>
+            </select>
+            <input type="submit" value="Convert" />
+        </form>
+
     </body>
 </html>
