@@ -46,7 +46,7 @@ public class CurrencyConverterTest {
         System.out.println("convert");
         float value = 1.0F;
         int currencyIndex = 0;
-        float expResult = 1.62F;
+        float expResult = 1.19F;
         float result = CurrencyConverter.convert(value, currencyIndex);
         assertEquals(expResult, result, 0.0);
         // TODO review the generated test code and remove the default call to fail.
