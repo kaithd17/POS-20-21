@@ -3,10 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+package at.kaindorf.controller;
 
-import bl.CurrencyConverter;
+import beans.GuestbookEntry;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -17,12 +20,9 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author kainz
  */
-@WebServlet(name="ConverterServlet", urlPatterns = {"/ConvertServlet"})
-public class ConverterServlet extends HttpServlet {
-    
-    private static float[] CHANGE = {1.19F, 0.92F, 8.02F};
-    private static String[] CURRENCY = {"Dollar","Pounds","Yuan"};
-    
+@WebServlet(name = "GuestbookController", urlPatterns = {"/GuestbookController"})
+public class GuestbookController extends HttpServlet {
+    private List<GuestbookEntry> entries = new ArrayList<>();
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -35,23 +35,7 @@ public class ConverterServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String getValue = request.getParameter("inputValue");
-        float val = Float.parseFloat(getValue);
-        int currencyIndex = Integer.parseInt(request.getParameter("currency"));
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet ConverterServlet</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet ConverterServlet at " + request.getContextPath() + "</h1>");
-            out.println(String.format("%.2f€ --> %.2f %s", val,CurrencyConverter.convert(val, currencyIndex),CurrencyConverter.getname(currencyIndex)));
-            out.println("</body>");
-            out.println("</html>");
-        }
+        request.getRequestDispatcher("guestbook.jsp").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -80,6 +64,26 @@ public class ConverterServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        request.setCharacterEncoding("UTF-8");
+        
+        String nickname = request.getParameter("nickname");
+        if (nickname == null || nickname.trim().isEmpty()) {
+            nickname = "unknown";
+        }
+
+        String email = request.getParameter("email");
+        if (email == null || email.trim().isEmpty()) {
+            email = "unknown";
+        }
+
+        String comment = request.getParameter("comment");
+        if (comment == null || comment.trim().isEmpty()) {
+            comment = "no comment";
+        }
+        
+        GuestbookEntry entry = new GuestbookEntry(nickname,email,comment);
+        entries.add(entry);
+        request.setAttribute("guestbookEntries", entries);
         processRequest(request, response);
     }
 

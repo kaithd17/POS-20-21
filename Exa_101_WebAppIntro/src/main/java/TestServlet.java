@@ -4,7 +4,6 @@
  * and open the template in the editor.
  */
 
-import bl.CurrencyConverter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -17,12 +16,8 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author kainz
  */
-@WebServlet(name="ConverterServlet", urlPatterns = {"/ConvertServlet"})
-public class ConverterServlet extends HttpServlet {
-    
-    private static float[] CHANGE = {1.19F, 0.92F, 8.02F};
-    private static String[] CURRENCY = {"Dollar","Pounds","Yuan"};
-    
+@WebServlet(urlPatterns = {"/TestServlet"})
+public class TestServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -35,20 +30,16 @@ public class ConverterServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String getValue = request.getParameter("inputValue");
-        float val = Float.parseFloat(getValue);
-        int currencyIndex = Integer.parseInt(request.getParameter("currency"));
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet ConverterServlet</title>");            
+            out.println("<title>Servlet TestServlet</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet ConverterServlet at " + request.getContextPath() + "</h1>");
-            out.println(String.format("%.2f€ --> %.2f %s", val,CurrencyConverter.convert(val, currencyIndex),CurrencyConverter.getname(currencyIndex)));
+            out.println("<h1>Servlet TestServlet at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
