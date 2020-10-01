@@ -12,6 +12,7 @@ import java.time.LocalDateTime;
  * @author kainz
  */
 public class Student {
+
     private String name;
     private int catalognr;
     private String className;
@@ -19,6 +20,10 @@ public class Student {
     private LocalDateTime birthdate;
 
     public Student() {
+    }
+
+    public Student(String line) {
+        
     }
 
     public Student(String name, int catalognr, String className, String gender, LocalDateTime birthdate) {
@@ -68,6 +73,5 @@ public class Student {
     public void setBirthdate(LocalDateTime birthdate) {
         this.birthdate = birthdate;
     }
-    
-    
+
 }

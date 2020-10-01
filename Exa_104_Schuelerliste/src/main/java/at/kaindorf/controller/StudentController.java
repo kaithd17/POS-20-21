@@ -5,8 +5,16 @@
  */
 package at.kaindorf.controller;
 
+import at.kaindorf.beans.Student;
+import at.kaindorf.bl.IO_Handler;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -19,6 +27,7 @@ import javax.servlet.http.HttpServletResponse;
  */
 @WebServlet(name = "StudentController", urlPatterns = {"/StudentController"})
 public class StudentController extends HttpServlet {
+    private List<Student> studentList = new ArrayList<>();
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -29,21 +38,21 @@ public class StudentController extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet StudentController</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet StudentController at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+    
+    @Override
+    public void init(ServletConfig config)
+            throws ServletException {
+        super.init(config);
+        String relativePath = this.getServletContext().getRealPath("/students_2020.csv");
+        try {
+            studentList = IO_Handler.getAllStudents(relativePath);
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(StudentController.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        response.setContentType("text/html;charset=UTF-8");
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
