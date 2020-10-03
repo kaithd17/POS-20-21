@@ -22,19 +22,8 @@ public class IO_Handler {
     
     public static List<Student> getAllStudents(String path) throws FileNotFoundException{
         List<Student> studentList = new ArrayList<>();
-        /*        try {
-
-             students = new BufferedReader(new FileReader(path))
-                    .lines()
-                    .skip(1)
-                    .map(Student::new)
-                    .collect(Collectors.toList());
-
-        } catch (IOException e) {
-            //Gib Exception aus
-        }*/
         try{
-            studentList = new BufferedReader(new FileReader(path)).lines().skip(1).map(Student::new).collect(Collectors.toList());
+            studentList = new BufferedReader(new FileReader(path)).lines().skip(1).map(Student::getStudent).collect(Collectors.toList());
         }catch(IOException e){
             
         }

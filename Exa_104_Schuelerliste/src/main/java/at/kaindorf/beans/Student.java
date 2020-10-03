@@ -5,7 +5,8 @@
  */
 package at.kaindorf.beans;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 /**
  *
@@ -13,33 +14,40 @@ import java.time.LocalDateTime;
  */
 public class Student {
 
-    private String name;
+    private String firstname;
+    private String lastname;
     private int catalognr;
     private String className;
     private String gender;
-    private LocalDateTime birthdate;
+    private LocalDate birthdate;
+    private static final DateTimeFormatter DTF = DateTimeFormatter.ofPattern("dd.MM.yyyy");
 
     public Student() {
     }
 
-    public Student(String line) {
-        
-    }
-
-    public Student(String name, int catalognr, String className, String gender, LocalDateTime birthdate) {
-        this.name = name;
+    public Student(String firstname, String lastname, int catalognr, String className, String gender, LocalDate birthdate) {
+        this.firstname = firstname;
+        this.lastname = lastname;
         this.catalognr = catalognr;
         this.className = className;
         this.gender = gender;
         this.birthdate = birthdate;
     }
 
-    public String getName() {
-        return name;
+    public String getFirstname() {
+        return firstname;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setFirstname(String firstname) {
+        this.firstname = firstname;
+    }
+
+    public String getLastname() {
+        return lastname;
+    }
+
+    public void setLastname(String lastname) {
+        this.lastname = lastname;
     }
 
     public int getCatalognr() {
@@ -66,12 +74,23 @@ public class Student {
         this.gender = gender;
     }
 
-    public LocalDateTime getBirthdate() {
+    public LocalDate getBirthdate() {
         return birthdate;
     }
 
-    public void setBirthdate(LocalDateTime birthdate) {
+    public void setBirthdate(LocalDate birthdate) {
         this.birthdate = birthdate;
+    }
+
+    public static Student getStudent(String line) {
+        //4DHIF;KAINZ;Thomas;m;2002-01-01
+        String className = line.split(";")[0];
+        String lastname = line.split(";")[1];
+        String firstname = line.split(";")[2];
+        String gender = line.split(";")[3];
+        LocalDate birthdate = LocalDate.parse(line.split(";")[4], DTF);
+        int catalognr = 0;
+        return new Student(firstname, lastname, catalognr,className, gender, birthdate);
     }
 
 }
