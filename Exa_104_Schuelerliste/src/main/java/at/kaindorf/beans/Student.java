@@ -93,4 +93,10 @@ public class Student {
         return new Student(firstname, lastname, catalognr,className, gender, birthdate);
     }
 
+    @Override
+    public String toString() {
+        return "Student{" + "firstname=" + firstname + ", lastname=" + lastname + ", catalognr=" + catalognr + ", className=" + className + ", gender=" + gender + ", birthdate=" + birthdate + '}';
+    }
+
+    
 }

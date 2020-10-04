@@ -7,9 +7,11 @@ package at.kaindorf.bl;
 
 import at.kaindorf.beans.Student;
 import java.io.BufferedReader;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -23,7 +25,7 @@ public class IO_Handler {
     public static List<Student> getAllStudents(String path) throws FileNotFoundException{
         List<Student> studentList = new ArrayList<>();
         try{
-            studentList = new BufferedReader(new FileReader(path)).lines().skip(1).map(Student::getStudent).collect(Collectors.toList());
+            studentList = new BufferedReader(new InputStreamReader(new FileInputStream(path), StandardCharsets.UTF_8)).lines().skip(1).map(Student::getStudent).collect(Collectors.toList());
         }catch(IOException e){
             
         }

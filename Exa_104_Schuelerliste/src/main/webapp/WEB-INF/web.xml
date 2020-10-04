@@ -5,7 +5,7 @@
    version="4.0">
     <welcome-file-list>
         <welcome-file>
-            studentlist.jsp
+            StudentController
         </welcome-file>
     </welcome-file-list>
     <session-config>

@@ -11,6 +11,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -26,6 +27,7 @@ import javax.servlet.http.HttpServletResponse;
 public class StudentController extends HttpServlet {
 
     private List<Student> studentList = new ArrayList<>();
+    private List<Student> filteredList = new ArrayList<>();
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -43,15 +45,15 @@ public class StudentController extends HttpServlet {
         String relativePath = this.getServletContext().getRealPath("/at.kaindorf.res/students_2020.csv");
         try {
             studentList = IO_Handler.getAllStudents(relativePath);
-            int number = 0;
+            int catalognr = 0;
             for (int i = 0; i < studentList.size(); i++) {
                 try {
                     if (studentList.get(i).getClassName().equals(studentList.get(i - 1).getClassName())) {
-                        number++;
-                        studentList.get(i).setCatalognr(number);
+                        catalognr++;
+                        studentList.get(i).setCatalognr(catalognr);
                     } else {
-                        number = 1;
-                        studentList.get(i).setCatalognr(number);
+                        catalognr = 1;
+                        studentList.get(i).setCatalognr(catalognr);
                     }
                 } catch (IndexOutOfBoundsException ex) {
 
@@ -60,10 +62,15 @@ public class StudentController extends HttpServlet {
         } catch (FileNotFoundException ex) {
             System.out.println("File failure!");
         }
+        filteredList.addAll(studentList);
     }
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        String student = request.getParameter("studentselector");
+        request.setAttribute("studentList", filteredList);
+        request.setAttribute("currentStudent", student);
+        request.getRequestDispatcher("studentlist.jsp").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -92,6 +99,15 @@ public class StudentController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        request.setCharacterEncoding("UTF-8");
+        String buttonText1 = request.getParameter("setzen");
+        String filterText = "";
+        if (buttonText1 != null) {
+            filterText = request.getParameter("filterText") == null ? "" : request.getParameter("filterText");
+        }
+        final String filter = filterText;
+        filteredList = studentList.stream().filter(student -> student.getLastname().toLowerCase().contains(filter.toLowerCase())).collect(Collectors.toList());
+        request.setAttribute("filterText", filterText);
         processRequest(request, response);
     }
 
