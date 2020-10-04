@@ -28,7 +28,7 @@
                         </tr>
                         <tr>
                             <td>Schüler auswählen:</td>
-                            <td><select name="studentselector">
+                            <td><select name="studentselector" class="selector">
                                     <option>Thomas Kainz</option>
                                     <option>Martin Trummer</option>
                                 </select></td>
@@ -38,7 +38,7 @@
             </div>
             <div class="details">
                 <div class="image">
-                    <img src="at.kaindorf.images/profile.png" width="90px" height="90px">
+                    <img src="at.kaindorf.images/cap.png" width="110px" height="110px">
                 </div>
                 <table border="0" class="detailsTable">
                     <tbody>

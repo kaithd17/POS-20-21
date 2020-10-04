@@ -13,7 +13,11 @@ body,html{
     background-color: white;
     width: 100%;
     height: 100%;
+    padding: 0;
+    margin: 0;
     font-family: 'Raleway';
+    /*background-color: #CED0CE; #F15025 60g6ca*/
+    background-color: #FFF;
 }
 
 * {
@@ -22,21 +26,23 @@ body,html{
 
 h1{
     text-align: center;
+    padding-bottom: 2%;
 }
 
 form {
     width: 100%;
-    height: 100%;
+    height: auto;
     display: flex;
     justify-content: center;
     align-content: center;
-    align-items: center;
+    box-sizing: border-box;
 }
 
 .list{
-    background-color: lightgray;
+    background-color: #f5f5f5;
     width: 50%;
-    border-radius: 10px;
+    border-radius: 4px;
+    box-shadow: 0px 0px 5px 0px #888;
     padding-bottom: 1%;
     padding-top: 1%;
 }
@@ -61,19 +67,41 @@ form {
 }
 
 .image{
-    padding-top: 2.5%;
-    padding-right: 6%;
+    padding-top: 1.5%;
+    padding-right: 8%;
 }
 
 .button{
-    background-color: black;
+    background-color: #6197CD;
     color: white;
-    border: 2px solid #000;
-    transition-duration: 0.4s;
+    padding: 10px 15px;
+    font-size: 15px;
+    transition: all 300ms;
     cursor: pointer;
+    border: none;
+    border-radius: 3px;
+    margin-left: 15px;
 }
 
 .button:hover {
-  background-color: white; 
-  color: black;
+    opacity: .7;
+}
+
+.selector{
+    cursor: pointer;
+}
+
+input,
+select{
+    font-size: 15px;
+    padding: 10px 15px;
+    box-sizing: border-box;
+    border: none;
+    border-bottom: solid 2px #6197CD;
+    margin-bottom: 10px;
+}
+
+input:focus,
+select:focus{
+    outline: none !important;
 }

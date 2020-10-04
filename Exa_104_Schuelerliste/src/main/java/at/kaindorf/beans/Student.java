@@ -20,7 +20,7 @@ public class Student {
     private String className;
     private String gender;
     private LocalDate birthdate;
-    private static final DateTimeFormatter DTF = DateTimeFormatter.ofPattern("dd.MM.yyyy");
+    private static final DateTimeFormatter DTF = DateTimeFormatter.ofPattern("yyyy-M-d");
 
     public Student() {
     }

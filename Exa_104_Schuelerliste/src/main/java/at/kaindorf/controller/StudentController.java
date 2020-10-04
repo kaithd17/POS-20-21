@@ -40,7 +40,7 @@ public class StudentController extends HttpServlet {
     public void init(ServletConfig config)
             throws ServletException {
         super.init(config);
-        String relativePath = this.getServletContext().getRealPath("/students_2020.csv");
+        String relativePath = this.getServletContext().getRealPath("/at.kaindorf.res/students_2020.csv");
         try {
             studentList = IO_Handler.getAllStudents(relativePath);
             int number = 0;
