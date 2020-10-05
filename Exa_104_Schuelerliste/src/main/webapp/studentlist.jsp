@@ -4,6 +4,7 @@
     Author     : kainz
 --%>
 
+<%@page import="java.time.format.DateTimeFormatter"%>
 <%@page import="java.util.List"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="at.kaindorf.beans.Student"%>
@@ -23,9 +24,12 @@
                         <tbody>
                             <tr>
                                 <td>Filter: </td>
-                                <td><input type="text" name="filterText" value=<% out.println(request.getParameter("filterText") == null ? "\"\"" : "\"" + (String)request.getParameter("filterText") + "\""); %> size="50"/></td>
+                                <td><input type="text" name="filterText" value="<% String filter = (String) request.getAttribute("filterText");
+                                    if (filter != null) {
+                                        out.println(filter);
+                                    }%>" size="50"/></td>
                                 <td><input type="submit" value="Filter setzen" class="button" name="setzen"/></td>
-                                <td><input type="reset" value="Filter entfernen" class="button" name="entfernen"/></td>
+                                <td><input type="submit" value="Filter entfernen" class="button" name="entfernen"/></td>
                             </tr>
                             <tr>
                                 <td>Schüler auswählen:</td>
@@ -35,12 +39,15 @@
                                             String studentName = (String) request.getAttribute("currentStudent");
                                             System.out.println(studentName);
                                             String selected = "";
+                                            Student studentDetails = new Student();
                                             if (studentList != null) {
                                                 for (Student student : studentList) {
                                                     selected = "";
-                                                    if (studentName != null && student.getFirstname().equals(studentName.split(" ")[0]) && student.getLastname().equals(studentName.split(" ")[1])) {
-                                                            selected = "selected";
-                                                        }
+                                                    String name = student.getFirstname() + " " + student.getLastname();
+                                                    if (studentName != null && studentName.equals(name)) {
+                                                        selected = "selected";
+                                                        studentDetails = student;
+                                                    }
                                                     out.println(String.format("<option %s>%s %s</option>", selected, student.getFirstname(), student.getLastname()));
                                                 }
                                             }
@@ -56,21 +63,26 @@
                     </div>
                     <table border="0" class="detailsTable">
                         <tbody>
-                            <tr>
-                                <td>Name:</td>
-                            </tr>
-                            <tr>
-                                <td>Katalognummer:</td>
-                            </tr>
-                            <tr>
-                                <td>Klasse:</td>
-                            </tr>
-                            <tr>
-                                <td>Geschlecht:</td>
-                            </tr>
-                            <tr>
-                                <td>Geburtsdatum:</td>
-                            </tr>
+                            <%
+                                if (studentDetails != null && studentDetails.getCatalognr() != 0) {
+                                    String template = "<tr> <td>%s: %s</td></tr>";
+                                    final DateTimeFormatter DTF = DateTimeFormatter.ofPattern("dd.MM.yyyy");
+                                    out.println(String.format(template, "Name", studentDetails.getLastname() + " " + studentDetails.getFirstname()));
+                                    out.println(String.format(template, "Katalognummer", studentDetails.getCatalognr() + ""));
+                                    out.println(String.format(template, "Klasse", studentDetails.getClassName()));
+                                    out.println(String.format(template, "Geschlecht", studentDetails.getGender()));
+                                    out.println(String.format(template, "Geburtsdatum", DTF.format(studentDetails.getBirthdate())));
+                                } else {
+                                    String template = "<tr> <td>%s:</td></tr>";
+                                    out.println(String.format(template, "Name"));
+                                    out.println(String.format(template, "Katalognummer"));
+                                    out.println(String.format(template, "Klasse"));
+                                    out.println(String.format(template, "Geschlecht"));
+                                    out.println(String.format(template, "Geburtsdatum"));
+                                }
+
+
+                            %>
                         </tbody>
                     </table>
 

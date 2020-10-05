@@ -45,7 +45,7 @@ public class StudentController extends HttpServlet {
         String relativePath = this.getServletContext().getRealPath("/at.kaindorf.res/students_2020.csv");
         try {
             studentList = IO_Handler.getAllStudents(relativePath);
-            int catalognr = 0;
+            int catalognr = 1;
             for (int i = 0; i < studentList.size(); i++) {
                 try {
                     if (studentList.get(i).getClassName().equals(studentList.get(i - 1).getClassName())) {
@@ -56,7 +56,7 @@ public class StudentController extends HttpServlet {
                         studentList.get(i).setCatalognr(catalognr);
                     }
                 } catch (IndexOutOfBoundsException ex) {
-
+                    studentList.get(i).setCatalognr(1);
                 }
             }
         } catch (FileNotFoundException ex) {
@@ -67,9 +67,32 @@ public class StudentController extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        String student = request.getParameter("studentselector");
+        String currentStudent = request.getParameter("studentselector");
+        String buttonText1 = request.getParameter("setzen");
+        String buttonText2 = request.getParameter("entfernen");
+        String filterText = "";
+        if (buttonText1 != null) {
+            filterText = request.getParameter("filterText") == null ? "" : request.getParameter("filterText");
+            final String filter = filterText;
+            filteredList = studentList.stream().filter(student -> student.getLastname().toLowerCase().contains(filter.toLowerCase())).collect(Collectors.toList());
+            request.setAttribute("filterText", filterText);
+        } else if (buttonText2 != null) {
+            filteredList.clear();
+            filteredList.addAll(studentList);
+            request.setAttribute("filterText", "");
+        } else {
+            filteredList.clear();
+            filteredList.addAll(studentList);
+            filterText = request.getParameter("filterText") == null ? "" : request.getParameter("filterText");
+            if (filterText != null) {
+                final String filter = filterText;
+                filteredList = studentList.stream().filter(student -> student.getLastname().toLowerCase().contains(filter.toLowerCase())).collect(Collectors.toList());
+            }
+            request.setAttribute("filterText", filterText);
+        }
+
         request.setAttribute("studentList", filteredList);
-        request.setAttribute("currentStudent", student);
+        request.setAttribute("currentStudent", currentStudent);
         request.getRequestDispatcher("studentlist.jsp").forward(request, response);
     }
 
@@ -100,14 +123,7 @@ public class StudentController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
-        String buttonText1 = request.getParameter("setzen");
-        String filterText = "";
-        if (buttonText1 != null) {
-            filterText = request.getParameter("filterText") == null ? "" : request.getParameter("filterText");
-        }
-        final String filter = filterText;
-        filteredList = studentList.stream().filter(student -> student.getLastname().toLowerCase().contains(filter.toLowerCase())).collect(Collectors.toList());
-        request.setAttribute("filterText", filterText);
+
         processRequest(request, response);
     }
 
