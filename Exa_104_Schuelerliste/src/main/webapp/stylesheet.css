@@ -35,11 +35,11 @@ form {
 
 .list {
     background-color: #f5f5f5;
-    width: 50%;
+    width: auto;
+    max-width: 70%;
     border-radius: 4px;
     box-shadow: 0px 0px 5px 0px #888;
-    padding-bottom: 1%;
-    padding-top: 1%;
+    padding: 1% 30px;
 }
 .filter {
     display: flex;

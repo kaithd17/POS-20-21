@@ -25,7 +25,7 @@
                                 <td>Filter: </td>
                                 <td><input type="text" name="filterText" value=<% out.println(request.getParameter("filterText") == null ? "\"\"" : "\"" + (String)request.getParameter("filterText") + "\""); %> size="50"/></td>
                                 <td><input type="submit" value="Filter setzen" class="button" name="setzen"/></td>
-                                <td><input type="submit" value="Filter entfernen" class="button" name="entfernen"/></td>
+                                <td><input type="reset" value="Filter entfernen" class="button" name="entfernen"/></td>
                             </tr>
                             <tr>
                                 <td>Schüler auswählen:</td>
