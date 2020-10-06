@@ -93,7 +93,7 @@ public class StudentController extends HttpServlet {
 
         request.setAttribute("studentList", filteredList);
         request.setAttribute("currentStudent", currentStudent);
-        request.getRequestDispatcher("studentlist.jsp").forward(request, response);
+        request.getRequestDispatcher("studentView.jsp").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
