@@ -41,14 +41,19 @@
                                             String selected = "";
                                             Student studentDetails = new Student();
                                             if (studentList != null) {
+                                                try {
+                                                    studentDetails = studentList.get(0);
+                                                } catch (IndexOutOfBoundsException ex) {
+
+                                                }
                                                 for (Student student : studentList) {
                                                     selected = "";
-                                                    String name = student.getFirstname() + " " + student.getLastname();
+                                                    String name = student.getLastname()+ " " + student.getFirstname();
                                                     if (studentName != null && studentName.equals(name)) {
                                                         selected = "selected";
                                                         studentDetails = student;
                                                     }
-                                                    out.println(String.format("<option %s>%s %s</option>", selected, student.getFirstname(), student.getLastname()));
+                                                    out.println(String.format("<option %s>%s %s</option>", selected, student.getLastname(), student.getFirstname()));
                                                 }
                                             }
                                         %>
