@@ -13,25 +13,26 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
+        <script src="guestbook.js" type="text/javascript"></script>
     </head>
     <body style="background-color: lightgray">
         <h1>Welcome to our guestbook</h1>
     </body>
-    <form action="./GuestbookController" method="POST">
+    <form action="./GuestbookController" method="POST" onsubmit="return vlaidate();">
         <table border="0">
             <tbody>
                 <tr>
                     <td>Nickname</td>
-                    <td><input type="text" name="nickname" value="Spiderman" /></td>
+                    <td><input type="text" name="nickname" value="Spiderman" id="nickname"/></td>
                 </tr>
                 <tr>
                     <td>Email:</td>
-                    <td><input type="text" name="email" value="spiderman@marvel.com" /></td>
+                    <td><input type="text" name="email" value="spiderman@marvel.com" id="email" /></td>
                 </tr>
                 <tr>
                     <td>Comment:</td>
                     <td>
-                        <textarea name="comment" rows="4" cols="20">
+                        <textarea name="comment" rows="4" cols="20" id="comment">
 Great guestbook
                         </textarea>
                     </td>
