@@ -16,7 +16,7 @@
         <link rel="stylesheet" href="styles.css">
     </head>
     <body>
-        <h1>Pizzeria di Kainz</h1>
+        <h1>Pizzeria di Kainzi</h1>
         <form action="./PizzaOrderController" method="POST">
             <table border='0'>
                 <tbody>
@@ -24,8 +24,9 @@
                         List<Pizza> pizzaList = (ArrayList) request.getAttribute("pizzaList");
                         
                         for (Pizza pizza : pizzaList) {
-                            out.println(String.format("<tr><td class='pizza'>%s %.2f</td></tr>", pizza.getName(),pizza.getPrice()));
-                            out.println(String.format("<tr><td>%s</td></tr>",pizza.getIngredients()));
+                            out.println(String.format("<tr><td class='pizza'>%s - %.2f€</td>"
+                                                    + "<td>&nbsp;&nbsp;&nbsp;<input type='number' value='0' min='0' max='10'/></td></tr>", pizza.getName(),pizza.getPrice()));
+                            out.println(String.format("<tr><td class='ingredients'>%s</td></tr>",pizza.getIngredients()));
                         }
                     %>
                 </tbody>
