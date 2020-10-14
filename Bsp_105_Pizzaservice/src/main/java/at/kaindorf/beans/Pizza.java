@@ -64,11 +64,11 @@ public class Pizza {
     }
     
     public static Pizza getPizza(String line){
-        //Name;Preis;Zutaten;
+        //Name;Preis;Zutaten;image
         String name = line.split(";")[0];
         double price = Double.parseDouble(line.split(";")[1]);
         String ingredients = line.split(";")[2];
-        String image = "";
+        String image = line.split(";")[3];
         return new Pizza(name,price,ingredients,image);
     }
 }

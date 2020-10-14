@@ -24,9 +24,10 @@
                         List<Pizza> pizzaList = (ArrayList) request.getAttribute("pizzaList");
                         
                         for (Pizza pizza : pizzaList) {
-                            out.println(String.format("<tr><td class='pizza'>%s - %.2f€</td>"
-                                                    + "<td>&nbsp;&nbsp;&nbsp;<input type='number' value='0' min='0' max='10'/></td></tr>", pizza.getName(),pizza.getPrice()));
-                            out.println(String.format("<tr><td class='ingredients'>%s</td></tr>",pizza.getIngredients()));
+                            out.println(String.format("<tr>"
+                                                    + "<td><img src='%s' width='50px' height='50px'></td>"
+                                                    + "<td><p class='pizza'>%s - %.2f€</p><p class='ingredients'>%s</p></td>"
+                                                    + "<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type='number' value='0' min='0' max='10' class='selecter'/></td></tr>",pizza.getImage(), pizza.getName(),pizza.getPrice(),pizza.getIngredients()));
                         }
                     %>
                 </tbody>
