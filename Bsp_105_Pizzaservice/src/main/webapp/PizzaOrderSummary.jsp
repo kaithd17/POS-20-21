@@ -9,9 +9,21 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <title>Pizzeria di Kainzi</title>
+        <link rel="stylesheet" href="stylesSummary.css">
     </head>
     <body>
-        <h1>Hello World!</h1>
+        <h1>Pizzeria di Kainzi</h1>
+        <form action="./PizzaOrderController" method="POST">
+            <div class="header">
+                <span class="item1">Pizza</span>
+                <span class="item2">Pr.</span>
+                <span class="item3">Stk.</span>
+                <span class="item4"> Ges.</span>
+            </div>
+            <div class="PizzaOrder">
+                <p></p>
+            </div>
+        </form>
     </body>
 </html>
