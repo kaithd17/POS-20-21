@@ -11,6 +11,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -25,7 +26,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author kainz
  */
-@WebServlet(name = "PizzaOrderServlet", urlPatterns = {"/PizzaOrderServlet"})
+@WebServlet(name = "PizzaOrderController", urlPatterns = {"/PizzaOrderController"})
 public class PizzaOrderController extends HttpServlet {
 
     private List<Pizza> pizzaList = new ArrayList<>();
@@ -85,6 +86,23 @@ public class PizzaOrderController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        String buttonText = request.getParameter("Order");
+        //HashMap <String, Integer> pizzaMap = new HashMap<String, Integer>();
+        List<Pizza> pizzaOrder = new ArrayList<>();
+        for (Pizza pizza : pizzaList) {
+            int order = Integer.parseInt(request.getParameter(String.format("%sOrder", pizza.getName())));
+            if (order > 0) {
+                pizza.setOrder(order);
+                pizzaOrder.add(pizza);
+               // pizzaMap.put(pizza.getName(), order);
+            }
+        }
+        String deliveryAddress = request.getParameter("inputField");
+        if (buttonText != null) {
+            request.setAttribute("pizzaOrder", pizzaOrder);
+            request.setAttribute("deliveryAddress", deliveryAddress);
+            request.getRequestDispatcher("PizzaOrderSummary.jsp").forward(request, response);
+        }
         processRequest(request, response);
     }
 

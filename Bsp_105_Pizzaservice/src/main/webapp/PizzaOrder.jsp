@@ -29,7 +29,7 @@
                                     out.println(String.format("<tr>"
                                             + "<td><img src='%s' width='75px' height='75px'>&nbsp</td>"
                                             + "<td><p class='pizza'>%s - %.2f€</p><p class='ingredients'>%s</p></td>"
-                                            + "<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type='number' value='0' min='0' max='10' class='selector' id='%sOrder'/></td></tr>", pizza.getImage(), pizza.getName(), pizza.getPrice(), pizza.getIngredients(),pizza.getName().toLowerCase()));
+                                            + "<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type='number' value='0' min='0' max='10' class='selector' name='%sOrder'/></td></tr>", pizza.getImage(), pizza.getName(), pizza.getPrice(), pizza.getIngredients(),pizza.getName()));
                                 }
                             %>
                         </tbody>
@@ -37,8 +37,8 @@
                 </div>
                 <div class="right">
                     <p>Lieferaddresse:</p>
-                    <input type="text" name="inputFiled" class="inputField"  />
-                    <input type="submit" value="Bestellen" class="orderButton"/>
+                    <input type="text" name="inputField" class="inputField"  />
+                    <input type="submit" value="Bestellen" name="Order" class="orderButton"/>
                 </div>
             </div>
         </form>

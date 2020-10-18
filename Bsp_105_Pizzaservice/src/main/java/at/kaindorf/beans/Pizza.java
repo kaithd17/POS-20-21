@@ -14,16 +14,18 @@ public class Pizza {
     private double price;
     private String ingredients;
     private String image;
+    private int order;
 
     public Pizza() {
     }
 
     
-    public Pizza(String name, double price, String ingredients, String image) {
+    public Pizza(String name, double price, String ingredients, String image, int order) {
         this.name = name;
         this.price = price;
         this.ingredients = ingredients;
         this.image = image;
+        this.order = order;
     }
 
     public String getName() {
@@ -58,9 +60,17 @@ public class Pizza {
         this.image = image;
     }
 
+    public int getOrder() {
+        return order;
+    }
+
+    public void setOrder(int order) {
+        this.order = order;
+    }
+
     @Override
     public String toString() {
-        return "Pizza{" + "name=" + name + ", price=" + price + ", ingredients=" + ingredients + ", image=" + image + '}';
+        return "Pizza{" + "name=" + name + ", price=" + price + ", ingredients=" + ingredients + ", image=" + image + ", order=" + order + '}';
     }
     
     public static Pizza getPizza(String line){
@@ -69,6 +79,7 @@ public class Pizza {
         double price = Double.parseDouble(line.split(";")[1]);
         String ingredients = line.split(";")[2];
         String image = line.split(";")[3];
-        return new Pizza(name,price,ingredients,image);
+        int order = 0;
+        return new Pizza(name,price,ingredients,image,order);
     }
 }
