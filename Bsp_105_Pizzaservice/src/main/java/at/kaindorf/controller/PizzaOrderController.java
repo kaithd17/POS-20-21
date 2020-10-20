@@ -9,12 +9,8 @@ import at.kaindorf.beans.Pizza;
 import at.kaindorf.io.IO_Handler;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -30,7 +26,7 @@ import javax.servlet.http.HttpServletResponse;
 public class PizzaOrderController extends HttpServlet {
 
     private List<Pizza> pizzaList = new ArrayList<>();
-    
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -40,7 +36,6 @@ public class PizzaOrderController extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    
     @Override
     public void init(ServletConfig config)
             throws ServletException {
@@ -51,7 +46,7 @@ public class PizzaOrderController extends HttpServlet {
         } catch (FileNotFoundException ex) {
             System.out.println("File failure");
         }
-        
+
     }
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -88,17 +83,18 @@ public class PizzaOrderController extends HttpServlet {
             throws ServletException, IOException {
         String buttonText = request.getParameter("Order");
         //HashMap <String, Integer> pizzaMap = new HashMap<String, Integer>();
-        List<Pizza> pizzaOrder = new ArrayList<>();
-        for (Pizza pizza : pizzaList) {
-            int order = Integer.parseInt(request.getParameter(String.format("%sOrder", pizza.getName())));
-            if (order > 0) {
-                pizza.setOrder(order);
-                pizzaOrder.add(pizza);
-               // pizzaMap.put(pizza.getName(), order);
-            }
-        }
-        String deliveryAddress = request.getParameter("inputField");
+
         if (buttonText != null) {
+            String deliveryAddress = request.getParameter("inputField");
+            List<Pizza> pizzaOrder = new ArrayList<>();
+            for (Pizza pizza : pizzaList) {
+                int order = Integer.parseInt(request.getParameter(String.format("%sOrder", pizza.getName())));
+                if (order > 0) {
+                    pizza.setOrder(order);
+                    pizzaOrder.add(pizza);
+                    // pizzaMap.put(pizza.getName(), order);
+                }
+            }
             request.setAttribute("pizzaOrder", pizzaOrder);
             request.setAttribute("deliveryAddress", deliveryAddress);
             request.getRequestDispatcher("PizzaOrderSummary.jsp").forward(request, response);

@@ -13,7 +13,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Pizzeria di Kainzi</title>
-        <link rel="stylesheet" href="stylesSummary.css">
+        <link rel="stylesheet" href="stylesSummaryScreen.css">
     </head>
     <body>
         <h1>Pizzeria di Kainzi</h1>
@@ -24,7 +24,7 @@
                 <span class="item3">Stk.</span>
                 <span class="item4"> Ges.</span>
             </div>
-            <div class="PizzaOrder">
+            <div class="pizzaOrder">
                 <%
                     List<Pizza> pizzaOrder = (ArrayList) request.getAttribute("pizzaOrder");
                     String deliveryAddress = (String) request.getAttribute("deliveryAddress");
@@ -39,7 +39,7 @@
                         }
                     out.println(String.format("<p>Summe: %.2f€</p>", result));
                     out.println(String.format("<p>Lieferadresse: %s</p>", deliveryAddress));
-                    out.println("<input  type = 'submit' value = 'Zurück' / >");
+                    out.println("<a href='./PizzaOrderController' class='backButton'>Back</a>");
                 %>
             </div>
         </form>
