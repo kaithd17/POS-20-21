@@ -4,6 +4,7 @@
     Author     : kainz
 --%>
 
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.util.List"%>
 <%@page import="beans.GuestbookEntry"%>
@@ -16,6 +17,11 @@
         <script src="guestbook.js" type="text/javascript"></script>
     </head>
     <body style="background-color: lightgray">
+        <%-- <select name="Test">
+        <c:forEach var="i" begin="1" end="10">
+            <option value="${i}">${i}</option>
+        </c:forEach>
+    </select> --%> 
         <h1>Welcome to our guestbook</h1>
     </body>
     <form action="./GuestbookController" method="POST" onsubmit="return vlaidate();">
@@ -47,7 +53,7 @@ Great guestbook
     <br/>
     <hr/>
     <br/>
-    <%
+    <%--
         List<GuestbookEntry> entries = (ArrayList) request.getAttribute("guestbookEntries");
         if (entries != null) {
             for (GuestbookEntry entry : entries) {
@@ -55,5 +61,10 @@ Great guestbook
             }
         }
 
-    %>
+    --%>
+    <c:forEach var="entry" items="${requestScope.guestbookEntries}">
+        <c:if test="${entry.nickname == 'Spiderman'}">
+            ${entry.nickname} says: ${entry.comment} <br/>
+        </c:if>
+    </c:forEach>
 </html>
