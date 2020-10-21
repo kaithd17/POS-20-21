@@ -88,11 +88,15 @@ public class PizzaOrderController extends HttpServlet {
             String deliveryAddress = request.getParameter("inputField");
             List<Pizza> pizzaOrder = new ArrayList<>();
             for (Pizza pizza : pizzaList) {
-                int order = Integer.parseInt(request.getParameter(String.format("%sOrder", pizza.getName())));
-                if (order > 0) {
-                    pizza.setOrder(order);
-                    pizzaOrder.add(pizza);
-                    // pizzaMap.put(pizza.getName(), order);
+                try {
+                    int order = Integer.parseInt(request.getParameter(String.format("%sOrder", pizza.getName())));
+                    if (order > 0) {
+                        pizza.setOrder(order);
+                        pizzaOrder.add(pizza);
+                        // pizzaMap.put(pizza.getName(), order);
+                    }
+                } catch (NumberFormatException ex) {
+                    System.out.println("Is not a number");
                 }
             }
             request.setAttribute("pizzaOrder", pizzaOrder);

@@ -18,7 +18,7 @@
     </head>
     <body>
         <h1>Pizzeria di Kainzi</h1>
-        <form action="./PizzaOrderController" method="POST" onsubmit="return isValid()">
+        <form action="./PizzaOrderController" method="POST" onsubmit="return valid()">
             <div class="gridContainer">
                 <div class="main">
                     <table border='0'>

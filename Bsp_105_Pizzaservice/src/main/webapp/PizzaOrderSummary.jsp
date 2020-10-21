@@ -18,28 +18,23 @@
     <body>
         <h1>Pizzeria di Kainzi</h1>
         <form action="./PizzaOrderController" method="POST">
-            <div class="header">
-                <span class="item1">Pizza</span>
-                <span class="item2">Pr.</span>
-                <span class="item3">Stk.</span>
-                <span class="item4"> Ges.</span>
-            </div>
             <div class="pizzaOrder">
+                <h2>Ihre Bestellung: </h2>
                 <%
                     List<Pizza> pizzaOrder = (ArrayList) request.getAttribute("pizzaOrder");
                     String deliveryAddress = (String) request.getAttribute("deliveryAddress");
                     double result = 0.0;
                     for (Pizza pizza : pizzaOrder) {
-                            out.println(String.format("<br/>"));
-                            out.println(String.format("<span>%s</span>", pizza.getName()));
-                            out.println(String.format("<span>%.2f€</span>", pizza.getPrice()));
-                            out.println(String.format("<span>%d</span>", pizza.getOrder()));
-                            out.println(String.format("<span>%.2f€</span>", (pizza.getPrice() * pizza.getOrder())));
-                            result += pizza.getPrice() * pizza.getOrder();
-                        }
-                    out.println(String.format("<p>Summe: %.2f€</p>", result));
+                        out.println(String.format("<br/>"));
+                        out.println(String.format("<span>%s</span>&nbsp;", pizza.getName()));
+                        out.println(String.format("<span>%.2f€</span>&nbsp;", pizza.getPrice()));
+                        out.println(String.format("<span>%dx</span>&nbsp;", pizza.getOrder()));
+                        out.println(String.format("<span>%.2f€</span>&nbsp;", (pizza.getPrice() * pizza.getOrder())));
+                        result += pizza.getPrice() * pizza.getOrder();
+                    }
+                    out.println(String.format("<p class='goRight'>Summe: %.2f€</p>", result));
                     out.println(String.format("<p>Lieferadresse: %s</p>", deliveryAddress));
-                    out.println("<a href='./PizzaOrderController' class='backButton'>Back</a>");
+                    out.println("<a href='./PizzaOrderController' class='backButton'>Zurück</a>");
                 %>
             </div>
         </form>
