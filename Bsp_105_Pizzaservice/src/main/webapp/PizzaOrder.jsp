@@ -4,6 +4,8 @@
     Author     : kainz
 --%>
 
+<%@page import="at.kaindorf.bl.Language"%>
+<%@page import="at.kaindorf.bl.LanguageSelector"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.util.List"%>
 <%@page import="at.kaindorf.beans.Pizza"%>
@@ -15,13 +17,33 @@
         <title>Pizzeria di Kainzi</title>
         <link rel="stylesheet" href="styles.css">
         <script src="PizzaOrder.js" type="text/javascript"></script>
+        <script>
+            function changeLanguage() {
+                let lang = document.getElementById('language').value;
+                document.cookie = "lang=" + lang + ";";
+                location.reload();
+            }
+        </script>
     </head>
     <body>
+        <%
+            Language language = LanguageSelector.getLanguage(request, response);
+        %>
         <div class="header">
             <h1>Pizzeria di Kainzi</h1>
-            <select name="language" class="language-selector">
-                <option>Deutsch</option>
-                <option>English</option>
+            <select name="language" class="language-selector" id="language" onchange="changeLanguage()">
+                <option><%
+                    out.println(language.getLanguageName());
+                    %></option>
+                    <%
+                        for (Language value : Language.values()) {
+                            if (!value.equals(language)) {
+                                out.println("<option value='" + value.getLanguageCode() + "'>"
+                                        + value.getLanguageName()
+                                        + "</option>");
+                            }
+                        }
+                    %>
             </select>
         </div>
         <form action="./PizzaOrderController" method="POST" onsubmit="return valid()">
@@ -30,8 +52,7 @@
                     <table border='0'>
                         <tbody>
                             <%
-                                List<Pizza> pizzaList = (ArrayList) request.getAttribute("pizzaList");
-
+                                List<Pizza> pizzaList = (ArrayList) request.getAttribute("pizzaList" + language.getLanguageCode());
                                 for (Pizza pizza : pizzaList) {
                                     out.println(String.format("<tr>"
                                             + "<td><img src='%s' width='75px' height='75px'>&nbsp</td>"
@@ -43,9 +64,21 @@
                     </table>
                 </div>
                 <div class="right" id="right">
-                    <p>Lieferaddresse:</p>
+                    <%
+                    String address = "Lieferadresse";
+                    String order = "Bestellen";
+                    if (language == Language.EN) {
+                            address = "Delivery address";
+                            order = "Order";
+                        }
+                    out.println(String.format("<p>%s:</p>", address));
+                    %>
+                    
                     <input type="text" name="inputField" class="inputField" id="inputField"  />
-                    <input type="submit" value="Bestellen" name="Order" class="orderButton"/>
+                    <%
+                        out.println(String.format("<input type='submit' value='%s' name='Order' class='orderButton'/>", order));
+                    %>
+                    
                 </div>
             </div>
         </form>

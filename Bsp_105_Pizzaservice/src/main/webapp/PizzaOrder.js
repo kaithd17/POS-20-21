@@ -8,6 +8,7 @@
 function valid() {
     var deliveryAddress = document.getElementById("inputField").value;
     var valueArray = document.getElementsByClassName("selector");
+    var language = document.getElementById("language").value;
 
     var amountOfPizzas = 0;
     for (let i = 0; i < valueArray.length; i++) {
@@ -19,13 +20,19 @@ function valid() {
 
     }
 
-    if (deliveryAddress == "") {
+    if (deliveryAddress == "" && language == "Deutsch") {
         alert("Bitte Lieferadresse eingeben!");
+        return false;
+    } else if (deliveryAddress == "" && language == "English") {
+        alert("Please enter your address!");
         return false;
     }
 
-    if (amountOfPizzas == 0) {
+    if (amountOfPizzas == 0 && language == "Deutsch") {
         alert("Sie müssen mindestens eine Pizza bestellen.");
+        return false;
+    }else if(amountOfPizzas == 0 && language == "English"){
+        alert("You must order at least one pizza.");
         return false;
     }
     return true;

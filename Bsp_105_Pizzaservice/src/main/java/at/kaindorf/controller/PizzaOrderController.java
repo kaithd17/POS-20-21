@@ -6,6 +6,8 @@
 package at.kaindorf.controller;
 
 import at.kaindorf.beans.Pizza;
+import at.kaindorf.bl.Language;
+import at.kaindorf.bl.LanguageSelector;
 import at.kaindorf.io.IO_Handler;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -25,7 +27,8 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet(name = "PizzaOrderController", urlPatterns = {"/PizzaOrderController"})
 public class PizzaOrderController extends HttpServlet {
 
-    private List<Pizza> pizzaList = new ArrayList<>();
+    private List<Pizza> pizzaListDE = new ArrayList<>();
+    private List<Pizza> pizzaListEN = new ArrayList<>();
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -40,9 +43,11 @@ public class PizzaOrderController extends HttpServlet {
     public void init(ServletConfig config)
             throws ServletException {
         super.init(config);
-        String relativePath = this.getServletContext().getRealPath("/at.kaindorf.res/pizza.csv");
+        String relativePath = this.getServletContext().getRealPath("/at.kaindorf.res/pizza_de.csv");
+        String relativePath2 = this.getServletContext().getRealPath("/at.kaindorf.res/pizza_en.csv");
         try {
-            pizzaList = IO_Handler.getAllPizzas(relativePath);
+            pizzaListDE = IO_Handler.getAllPizzas(relativePath);
+            pizzaListEN = IO_Handler.getAllPizzas(relativePath2);
         } catch (FileNotFoundException ex) {
             System.out.println("File failure");
         }
@@ -51,7 +56,8 @@ public class PizzaOrderController extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        request.setAttribute("pizzaList", pizzaList);
+        request.setAttribute("pizzaListDE", pizzaListDE);
+        request.setAttribute("pizzaListEN", pizzaListEN);
         request.getRequestDispatcher("PizzaOrder.jsp").forward(request, response);
     }
 
@@ -87,13 +93,18 @@ public class PizzaOrderController extends HttpServlet {
         if (buttonText != null) {
             String deliveryAddress = request.getParameter("inputField");
             List<Pizza> pizzaOrder = new ArrayList<>();
+            List<Pizza> pizzaList = new ArrayList<>(pizzaListDE);
+            Language language = LanguageSelector.getLanguage(request, response);
+            if (language == Language.EN) {
+                pizzaList.clear();
+                pizzaList.addAll(pizzaListEN);
+            }
             for (Pizza pizza : pizzaList) {
                 try {
                     int order = Integer.parseInt(request.getParameter(String.format("%sOrder", pizza.getName())));
                     if (order > 0) {
                         pizza.setOrder(order);
                         pizzaOrder.add(pizza);
-                        // pizzaMap.put(pizza.getName(), order);
                     }
                 } catch (NumberFormatException ex) {
                     System.out.println("Is not a number");

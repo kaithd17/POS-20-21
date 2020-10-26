@@ -4,6 +4,8 @@
     Author     : kainz
 --%>
 
+<%@page import="at.kaindorf.bl.LanguageSelector"%>
+<%@page import="at.kaindorf.bl.Language"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.util.List"%>
 <%@page import="at.kaindorf.beans.Pizza"%>
@@ -14,19 +16,50 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Pizzeria di Kainzi</title>
         <link rel="stylesheet" href="stylesSummaryScreen.css">
+        <script>
+            function changeLanguage() {
+                let lang = document.getElementById('language').value;
+                document.cookie = "lang=" + lang + ";";
+                location.reload();
+            }
+        </script>
     </head>
     <body>
+        <%
+            Language language = LanguageSelector.getLanguage(request, response);
+        %>
         <div class="header">
             <h1>Pizzeria di Kainzi</h1>
-            <select name="language" class="language-selector">
-                <option>Deutsch</option>
-                <option>English</option>
+            <select name="language" class="language-selector" id="language" onchange="changeLanguage()">
+                <option><%
+                    out.println(language.getLanguageName());
+                    %></option>
+                    <%
+                        for (Language value : Language.values()) {
+
+                            if (!value.equals(language)) {
+                                out.println("<option value='" + value.getLanguageCode() + "'>"
+                                        + value.getLanguageName()
+                                        + "</option>");
+                            }
+                        }
+                    %>
             </select>
         </div>
         <form action="./PizzaOrderController" method="POST">
             <div class="pizzaOrder">
-                <h2>Ihre Bestellung: </h2>
                 <%
+                    String text = "Ihre Bestellung";
+                    String back = "Zurück";
+                    String sum = "Summe";
+                    String address = "Lieferadresse";
+                    if (language == Language.EN) {
+                        address = "Delivery address";
+                        back = "Back";
+                        text = "Your Order";
+                        sum = "Total";
+                    }
+                    out.println(String.format("<h2>%s: </h2>", text));
                     List<Pizza> pizzaOrder = (ArrayList) request.getAttribute("pizzaOrder");
                     String deliveryAddress = (String) request.getAttribute("deliveryAddress");
                     double result = 0.0;
@@ -44,9 +77,9 @@
                     }
                     out.println("</tbody>");
                     out.println("</table>");
-                    out.println(String.format("<p class='goRight'>Summe: %.2f€</p>", result));
-                    out.println(String.format("<p>Lieferadresse: %s</p>", deliveryAddress));
-                    out.println("<a href='./PizzaOrderController' class='backButton'>Zurück</a>");
+                    out.println(String.format("<p class='goRight'>%s: %.2f€</p>",sum, result));
+                    out.println(String.format("<p>%s: %s</p>",address, deliveryAddress));
+                    out.println(String.format("<a href='./PizzaOrderController' class='backButton'>%s</a>", back));
                 %>
             </div>
         </form>

@@ -75,6 +75,7 @@ public class Pizza {
     
     public static Pizza getPizza(String line){
         //Name;Preis;Zutaten;image
+        System.out.println(line.split(";").length);
         String name = line.split(";")[0];
         double price = Double.parseDouble(line.split(";")[1]);
         String ingredients = line.split(";")[2];
