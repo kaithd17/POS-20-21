@@ -24,14 +24,20 @@
                     List<Pizza> pizzaOrder = (ArrayList) request.getAttribute("pizzaOrder");
                     String deliveryAddress = (String) request.getAttribute("deliveryAddress");
                     double result = 0.0;
+                    out.println("<br/>");
+                    out.println("<table border='0'");
+                    out.println("<tbody>");
                     for (Pizza pizza : pizzaOrder) {
-                        out.println(String.format("<br/>"));
-                        out.println(String.format("<span>%s</span>&nbsp;", pizza.getName()));
-                        out.println(String.format("<span>%.2f€</span>&nbsp;", pizza.getPrice()));
-                        out.println(String.format("<span>%dx</span>&nbsp;", pizza.getOrder()));
-                        out.println(String.format("<span>%.2f€</span>&nbsp;", (pizza.getPrice() * pizza.getOrder())));
+                        out.println("<tr>");
+                        out.println(String.format("<td><span>%s</span>&nbsp;</td>", pizza.getName()));
+                        out.println(String.format("<td><span>%.2f€</span>&nbsp;</td>", pizza.getPrice()));
+                        out.println(String.format("<td><span>%dx</span>&nbsp;</td>", pizza.getOrder()));
+                        out.println(String.format("<td><span>%.2f€</span>&nbsp;</td>", (pizza.getPrice() * pizza.getOrder())));
+                        out.println("</tr>");
                         result += pizza.getPrice() * pizza.getOrder();
                     }
+                    out.println("</tbody>");
+                    out.println("</table>");
                     out.println(String.format("<p class='goRight'>Summe: %.2f€</p>", result));
                     out.println(String.format("<p>Lieferadresse: %s</p>", deliveryAddress));
                     out.println("<a href='./PizzaOrderController' class='backButton'>Zurück</a>");
