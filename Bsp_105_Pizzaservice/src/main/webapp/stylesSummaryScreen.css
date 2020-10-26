@@ -25,11 +25,32 @@ html{
     color: white;
 }
 
-h1 {
+.header {
+    padding-top: 2%;
     text-align: center;
     box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+}
+h1 {
     margin: 0;
-    padding-top: 2%;
+    margin-left: 14%;
+    justify-content: center;
+}
+
+.language-selector{
+    justify-content: flex-end;
+    margin-left: 10%;
+    color: black;
+    box-sizing: border-box;
+    border: 0px;
+    outline: 0px;
+    border-bottom: solid 5px black;
+    cursor: pointer;
+}
+
+option {
+    color: black;
 }
 
 h2 {

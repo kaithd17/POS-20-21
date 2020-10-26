@@ -16,7 +16,13 @@
         <link rel="stylesheet" href="stylesSummaryScreen.css">
     </head>
     <body>
-        <h1>Pizzeria di Kainzi</h1>
+        <div class="header">
+            <h1>Pizzeria di Kainzi</h1>
+            <select name="language" class="language-selector">
+                <option>Deutsch</option>
+                <option>English</option>
+            </select>
+        </div>
         <form action="./PizzaOrderController" method="POST">
             <div class="pizzaOrder">
                 <h2>Ihre Bestellung: </h2>
