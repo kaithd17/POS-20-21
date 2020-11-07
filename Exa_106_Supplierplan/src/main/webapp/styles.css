@@ -8,3 +8,61 @@ and open the template in the editor.
     Author     : kainz
 */
 
+
+html,
+body {
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    font-family: 'Verdana';
+    background-color: lightblue; 
+}
+
+h1{
+    margin: 0;
+    text-align: center;
+    padding-top: 1%;
+}
+
+.className {
+    text-align: center;
+    font-weight: bold;
+    font-size: 15px;
+}
+
+.header {
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    padding-top: 2%;
+}
+
+p {
+    margin: 0;
+    padding: 0;
+}
+
+.timetableContainer {
+    padding-top: 2%;
+    display: flex;
+    align-content: center;
+    justify-content: center;
+    
+}
+
+.timetable {
+    border-collapse: collapse;
+    border: 1px solid black;
+}
+
+.timetableHeader {
+    background: #CCCCCC;
+    text-align: center;
+    border: 1px solid black;
+    font-weight: bold;
+}
+
+.subjectElement {
+    border: 1px solid black;
+}
