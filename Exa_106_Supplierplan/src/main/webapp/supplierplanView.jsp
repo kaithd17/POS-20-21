@@ -6,6 +6,7 @@
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page import="at.kaindorf.bl.Day"%> 
 <!DOCTYPE html>
 <html>
     <head>
@@ -16,7 +17,9 @@
     <body>
         <form action="./SupplierplanController" method="POST">
             <h1>Supplierplan</h1>
-            <p class="className">Klasse</p>
+            <p class="className">
+                <c:out value="${applicationScope.className}"/>
+            </p>
             <div class="header">
                 <table border="0">
                     <tbody>
@@ -24,11 +27,9 @@
                             <td><span>Tag: </span></td>
                             <td>
                                 <select name="days">
-                                    <option>Montag</option>
-                                    <option>Dienstag</option>
-                                    <option>Mittwoch</option>
-                                    <option>Donnerstag</option>
-                                    <option>Freitag</option>
+                                    <c:forEach var="day" items="${applicationScope.daysOfTheWeek}">
+                                        <option>${day.getNameOfDay()}</option>
+                                    </c:forEach>
                                 </select>
                             </td>
                         </tr>
@@ -62,30 +63,30 @@
                     <thead>
                         <tr>
                             <th class="timetableHeader"></th>
-                            <th class="timetableHeader">MO</th>
-                            <th class="timetableHeader">DI</th>
-                            <th class="timetableHeader">MI</th>
-                            <th class="timetableHeader">DO</th>
-                            <th class="timetableHeader">FR</th>
+                                <c:forEach var="dayToken" items="${applicationScope.daysOfTheWeek}">
+                                <th class="timetableHeader">${dayToken.getDayToken()}</th>
+                                </c:forEach>
                         </tr>
                     </thead>
                     <tbody>
-                        <c:forEach var="i" begin="1" end="10">
-                            <tr>
-                                <td class="timetableHeader">${i}</td>
-                                <c:forEach var="j" begin="1" end="5">
-                                    <td class="subjectElement">
-                                        <p>text</p>
-                                        <p>text2</p>
-                                    </td>
-                                </c:forEach>
-                            </tr>
+                        <c:forEach var="key" items="${applicationScope.timeTableMap.keySet()}" varStatus="counter">
+                            <c:if test="${counter.index%5 == 0}">
+                                <tr>
+                                    <td class="timetableHeader">${String.format("%.0f",counter.index/5+1)}</td>
+                                </c:if>
+                                <td class="subjectElement">
+                                    <p><c:out value="${applicationScope.timeTableMap.get(key).getSubject()}"/></p>
+                                    <p><c:out value="${applicationScope.timeTableMap.get(key)}"/></p>
+                                </td>
+                            <c:if test="${counter.index%5 == 0 && counter.index%5 != 0}">
+                                </tr>
+                            </c:if>
                         </c:forEach>
-
+                        </tr>
                     </tbody>
                 </table>
-
             </div>
         </form>
     </body>
 </html>
+
