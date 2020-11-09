@@ -66,3 +66,16 @@ p {
 .subjectElement {
     border: 1px solid black;
 }
+
+.subject {
+    font-weight: bold;
+}
+
+.subjectSubstitutionSubstitution {
+    font-weight: bold;
+    color: red;
+}
+
+.teacherSubstitutionSubstitution {
+    color: red;
+}

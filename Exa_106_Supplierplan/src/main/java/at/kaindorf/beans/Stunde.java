@@ -50,6 +50,10 @@ public class Stunde {
 
     @Override
     public String toString() {
+        return "Stunde{" + "subject=" + subject + ", teachers=" + teachers + ", supplierung=" + supplierung + '}';
+    }
+
+    public String formatTeachers() {
         String str = "";
         for (int i = 0; i < teachers.size(); i++) {
             if ((i + 1) == teachers.size()) {

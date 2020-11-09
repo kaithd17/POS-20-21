@@ -21,18 +21,18 @@ import java.util.stream.Collectors;
  * @author kainz
  */
 public class IO_Handler {
-    
-    public static String getClassName(String path) throws IOException{
+
+    public static String getClassName(String path) throws IOException {
         String className = "";
         try {
-            className = new BufferedReader(new InputStreamReader(new FileInputStream(path), StandardCharsets.UTF_8)).readLine();
+            className = new BufferedReader(new InputStreamReader(new FileInputStream(path), StandardCharsets.UTF_8)).readLine().split(";")[0];
         } catch (FileNotFoundException ex) {
             System.out.println("File not found!");
         }
         return className;
     }
-    
-    public static List<Stunde> getAllLessons(String path){
+
+    public static List<Stunde> getAllLessons(String path) {
         List<Stunde> lessonsList = new ArrayList<>();
         try {
             lessonsList = new BufferedReader(new InputStreamReader(new FileInputStream(path), StandardCharsets.UTF_8)).lines().skip(1).map(Stunde::getLesson).collect(Collectors.toList());

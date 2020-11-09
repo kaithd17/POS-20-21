@@ -13,6 +13,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link rel="stylesheet" href="styles.css">
         <title>Supplierplan</title>
+        <script src="supplierplan.js" type="text/javascript"></script>
     </head>
     <body>
         <form action="./SupplierplanController" method="POST">
@@ -36,7 +37,7 @@
                         <tr>
                             <td>Stunde:</td>
                             <td>                               
-                                <select name="days">
+                                <select name="lesson">
                                     <c:forEach var="i" begin="1" end="10">
                                         <option>${i}</option>
                                     </c:forEach>
@@ -73,16 +74,23 @@
                             <c:if test="${counter.index%5 == 0}">
                                 <tr>
                                     <td class="timetableHeader">${String.format("%.0f",counter.index/5+1)}</td>
-                                </c:if>
+                            </c:if>
                                 <td class="subjectElement">
-                                    <p><c:out value="${applicationScope.timeTableMap.get(key).getSubject()}"/></p>
-                                    <p><c:out value="${applicationScope.timeTableMap.get(key)}"/></p>
+                                    <c:choose>
+                                        <c:when test="${applicationScope.timeTableMap.get(key).isSupplierung()}">
+                                            <p class="subjectSubstitution"><c:out value="${applicationScope.timeTableMap.get(key).getSubject()}"/></p>
+                                            <p class="teacherSubstitution"><c:out value="${applicationScope.timeTableMap.get(key).formatTeachers()}"/></p>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <p class="subject"><c:out value="${applicationScope.timeTableMap.get(key).getSubject()}"/></p>
+                                            <p class="teacher"><c:out value="${applicationScope.timeTableMap.get(key).formatTeachers()}"/></p>
+                                        </c:otherwise>
+                                    </c:choose>
                                 </td>
-                            <c:if test="${counter.index%5 == 0 && counter.index%5 != 0}">
+                             <c:if test="${counter.index%5 == 0 && counter.index%5 != 0}">
                                 </tr>
                             </c:if>
                         </c:forEach>
-                        </tr>
                     </tbody>
                 </table>
             </div>

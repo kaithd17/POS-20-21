@@ -7,6 +7,7 @@ package at.kaindorf.controller;
 
 import at.kaindorf.beans.Stunde;
 import at.kaindorf.bl.Day;
+import at.kaindorf.bl.SupplierplanBL;
 import at.kaindorf.io.IO_Handler;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -29,6 +30,7 @@ public class SupplierplanController extends HttpServlet {
 
     private List<Day> daysOfTheWeek = new ArrayList<>();
     private Map<String, Stunde> timeTableMap = new LinkedHashMap<>(); //Damit sie in der Reihenfolge bleiben wie sie eingefügt wurden
+    private SupplierplanBL supplierplanObj = new SupplierplanBL();
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -43,11 +45,7 @@ public class SupplierplanController extends HttpServlet {
     public void init(ServletConfig config)
             throws ServletException {
         super.init(config);
-        daysOfTheWeek.add(Day.MO);
-        daysOfTheWeek.add(Day.DI);
-        daysOfTheWeek.add(Day.MI);
-        daysOfTheWeek.add(Day.DO);
-        daysOfTheWeek.add(Day.FR);
+        daysOfTheWeek = supplierplanObj.getAllDays();
         config.getServletContext().setAttribute("daysOfTheWeek", daysOfTheWeek);
 
         String relativePath = this.getServletContext().getRealPath("/at.kaindorf.res/stundenplan.csv");
@@ -59,22 +57,10 @@ public class SupplierplanController extends HttpServlet {
         }
 
         List<Stunde> lessons = IO_Handler.getAllLessons(relativePath);
-        for (Stunde lesson : lessons) {
-            System.out.println(lesson);
-        }
-        int counter = 0;
-        int lessonCounter = 1;
-        for (int i = 0; i < lessons.size(); i++) {
-            if (counter % 5 == 0 && counter != 0) {
-                counter = 0;
-                lessonCounter++;
-            }
-            timeTableMap.put(daysOfTheWeek.get(counter).getDayToken() + lessonCounter, lessons.get(i));
-            counter++;
-        }
+        timeTableMap = supplierplanObj.getTimeTableMap(lessons, daysOfTheWeek);
         config.getServletContext().setAttribute("timeTableMap", timeTableMap);
-        
-       /* for (String str : timeTableMap.keySet()) {
+
+        /* for (String str : timeTableMap.keySet()) {
             System.out.print(str+": ");
             System.out.println(timeTableMap.get(str));
         }*/
@@ -111,6 +97,12 @@ public class SupplierplanController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        String day = request.getParameter("days");
+        String dayFinal = day.substring(0, 2);
+        String lesson = request.getParameter("lesson");
+        String subject = request.getParameter("subjectField");
+        String teacher = request.getParameter("teacherField");
+        timeTableMap = supplierplanObj.addLesson(dayFinal, lesson, teacher, subject);
         processRequest(request, response);
     }
 
