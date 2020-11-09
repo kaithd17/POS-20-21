@@ -27,7 +27,7 @@
                         <tr>
                             <td><span>Tag: </span></td>
                             <td>
-                                <select name="days">
+                                <select class="selectors" name="days">
                                     <c:forEach var="day" items="${applicationScope.daysOfTheWeek}">
                                         <option>${day.getNameOfDay()}</option>
                                     </c:forEach>
@@ -37,7 +37,7 @@
                         <tr>
                             <td>Stunde:</td>
                             <td>                               
-                                <select name="lesson">
+                                <select class="selectors" name="lesson">
                                     <c:forEach var="i" begin="1" end="10">
                                         <option>${i}</option>
                                     </c:forEach>
@@ -46,26 +46,27 @@
                         </tr>
                         <tr>
                             <td>Fach:</td>
-                            <td><input type="text" name="subjectField"/></td>
+                            <td><input type="text" name="subjectField" class="textfields"/></td>
                         </tr>
                         <tr>
                             <td>Lehrer:</td>
-                            <td><input type="text" name="teacherField"/></td>
-                        </tr>
-                        <tr>
-                            <td><input type="submit" value="Übernehmen" class="buttonSubmit"/></td>
+                            <td><input type="text" name="teacherField" class="textfields"/></td>
                         </tr>
                     </tbody>
                 </table>
+            </div>
+            
+            <div class="buttonContainer">
+                <input type="submit" value="Übernehmen" class="buttonSubmit"/>
             </div>
 
             <div class="timetableContainer">
                 <table border="0" class="timetable">
                     <thead>
                         <tr>
-                            <th class="timetableHeader"></th>
+                            <th class="timetableHeaderDays"></th>
                                 <c:forEach var="dayToken" items="${applicationScope.daysOfTheWeek}">
-                                <th class="timetableHeader">${dayToken.getDayToken()}</th>
+                                <th class="timetableHeaderDays">${dayToken.getDayToken()}</th>
                                 </c:forEach>
                         </tr>
                     </thead>
@@ -73,7 +74,7 @@
                         <c:forEach var="key" items="${applicationScope.timeTableMap.keySet()}" varStatus="counter">
                             <c:if test="${counter.index%5 == 0}">
                                 <tr>
-                                    <td class="timetableHeader">${String.format("%.0f",counter.index/5+1)}</td>
+                                    <td class="timetableLesson">${String.format("%.0f",counter.index/5+1)}</td>
                             </c:if>
                                 <td class="subjectElement">
                                     <c:choose>
