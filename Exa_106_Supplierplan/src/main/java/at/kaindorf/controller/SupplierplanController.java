@@ -100,9 +100,16 @@ public class SupplierplanController extends HttpServlet {
         String day = request.getParameter("days");
         String dayFinal = day.substring(0, 2);
         String lesson = request.getParameter("lesson");
-        String subject = request.getParameter("subjectField");
-        String teacher = request.getParameter("teacherField");
-        timeTableMap = supplierplanObj.addLesson(dayFinal, lesson, teacher, subject);
+        System.out.println(dayFinal+lesson + ": " + timeTableMap.get(dayFinal + lesson).getSubject());
+        if (timeTableMap.get(dayFinal + lesson).getSubject().equals("")) {
+            String subjectError = "Supplierung einer Freistunde nicht möglich!";
+            request.getServletContext().setAttribute("errorMessage", subjectError);
+        } else {
+            String subject = request.getParameter("subjectField");
+            String teacher = request.getParameter("teacherField");
+            timeTableMap = supplierplanObj.addLesson(dayFinal, lesson, teacher, subject);
+        }
+
         processRequest(request, response);
     }
 

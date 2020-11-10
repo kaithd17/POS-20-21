@@ -8,6 +8,7 @@ and open the template in the editor.
     Author     : kainz
 */
 
+@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@100;200;300;400;500&display=swap');
 
 html,
 body {
@@ -15,7 +16,7 @@ body {
     width: 100%;
     margin: 0;
     padding: 0;
-    font-family: 'Verdana';
+    font-family: 'Raleway';
     background-color: #E5FFDE; 
 }
 
@@ -135,4 +136,25 @@ input:focus {
 .buttonSubmit:hover {
     background-color: white;
     color: black;
+}
+
+.errorMessageSubject {
+    display: flex;
+    justify-content: center;
+    text-align: center;
+}
+
+.errorMessages {
+    color: red;
+    font-weight: bold;
+    font-style: italic;
+    font-size: 15px;
+}
+
+.errorMessage {
+    color: red;
+    font-weight: bold;
+    font-style: italic;
+    font-size: 15px;
+    display: none;
 }

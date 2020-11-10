@@ -16,7 +16,7 @@
         <script src="supplierplan.js" type="text/javascript"></script>
     </head>
     <body>
-        <form action="./SupplierplanController" method="POST">
+        <form action="./SupplierplanController" method="POST" onsubmit="return validInput()">
             <h1>Supplierplan</h1>
             <p class="className">
                 <c:out value="${applicationScope.className}"/>
@@ -46,20 +46,34 @@
                         </tr>
                         <tr>
                             <td>Fach:</td>
-                            <td><input type="text" name="subjectField" class="textfields"/></td>
+                            <td><input type="text" name="subjectField" class="textfields" id="subjectField"/></td>
+                            <td><span class="errorMessage" id="subjectError">Fach eingeben!</span></td>
                         </tr>
                         <tr>
                             <td>Lehrer:</td>
-                            <td><input type="text" name="teacherField" class="textfields"/></td>
+                            <td><input type="text" name="teacherField" class="textfields" id="teacherField"/></td>
+                            <td><span class="errorMessage" id="teacherError">Lehrer eingeben!</span></td>
                         </tr>
                     </tbody>
                 </table>
             </div>
-            
+
             <div class="buttonContainer">
-                <input type="submit" value="Übernehmen" class="buttonSubmit"/>
+                <input type="submit" value="Übernehmen" class="buttonSubmit" />
+
             </div>
 
+            <div  class="errorMessageSubject">
+                <c:choose>
+                    <c:when test="${applicationScope.errorMessage == ''}">
+                        <p class="errorMessages"><c:out value=""/></p>
+                    </c:when>
+                    <c:otherwise>
+                        <p class="errorMessages"><c:out value="${applicationScope.errorMessage}"/></p>
+                        <c:set var="errorMessage" scope="application" value=""/>
+                    </c:otherwise>
+                </c:choose>
+            </div>
             <div class="timetableContainer">
                 <table border="0" class="timetable">
                     <thead>
@@ -75,7 +89,7 @@
                             <c:if test="${counter.index%5 == 0}">
                                 <tr>
                                     <td class="timetableLesson">${String.format("%.0f",counter.index/5+1)}</td>
-                            </c:if>
+                                </c:if>
                                 <td class="subjectElement">
                                     <c:choose>
                                         <c:when test="${applicationScope.timeTableMap.get(key).isSupplierung()}">
@@ -88,7 +102,7 @@
                                         </c:otherwise>
                                     </c:choose>
                                 </td>
-                             <c:if test="${counter.index%5 == 0 && counter.index%5 != 0}">
+                                <c:if test="${counter.index%5 == 0 && counter.index%5 != 0}">
                                 </tr>
                             </c:if>
                         </c:forEach>
