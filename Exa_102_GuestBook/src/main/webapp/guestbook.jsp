@@ -29,11 +29,11 @@
             <tbody>
                 <tr>
                     <td>Nickname</td>
-                    <td><input type="text" name="nickname" value="Spiderman" id="nickname"/></td>
+                    <td><input type="text" name="nickname" id="nickname" onmouseover="fill(this,'Spiderman');"/></td>
                 </tr>
                 <tr>
                     <td>Email:</td>
-                    <td><input type="text" name="email" value="spiderman@marvel.com" id="email" /></td>
+                    <td><input type="text" name="email" id="email" onmouseover="fill(this,'spiderman@marvel.com');"/></td>
                 </tr>
                 <tr>
                     <td>Comment:</td>
