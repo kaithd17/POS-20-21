@@ -8,7 +8,9 @@ package at.kaindorf.io;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.List;
 import at.kaindorf.pojos.Contact;
-import java.util.ArrayList;
+import com.fasterxml.jackson.core.type.TypeReference;
+import java.io.File;
+import java.io.IOException;
 
 /**
  *
@@ -16,8 +18,11 @@ import java.util.ArrayList;
  */
 public class IO_Handler {
     public static List<Contact> getAllContacts (String path){
-        List<Contact> contactList = new ArrayList<>();
-        
-        return contactList;
+        try {
+            return new ObjectMapper().readValue(new File(path), new TypeReference<List<Contact>>() { });
+        } catch (IOException ex) {
+            System.out.println(ex.toString());
+        }
+        return null;
     }
 }

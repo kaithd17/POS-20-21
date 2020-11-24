@@ -5,6 +5,8 @@
  */
 package at.kaindorf.pojos;
 
+import at.kaindorf.io.DateDeserializer;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import java.time.LocalDate;
 import java.util.List;
 import lombok.AllArgsConstructor;
@@ -24,6 +26,7 @@ public class Contact {
     private String lastname;
     private List<String> email;
     private String gender;
+    @JsonDeserialize(using = DateDeserializer.class)
     private LocalDate dateOfBirth;
     private Company company;
 }
