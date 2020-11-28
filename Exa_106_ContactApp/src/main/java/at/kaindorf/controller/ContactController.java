@@ -5,9 +5,10 @@
  */
 package at.kaindorf.controller;
 
-import at.kaindorf.io.IO_Handler;
+import at.kaindorf.json.JSONAccess;
 import java.io.IOException;
 import at.kaindorf.pojos.Contact;
+import at.kaindorf.pojos.Company;
 import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.ServletConfig;
@@ -40,7 +41,7 @@ public class ContactController extends HttpServlet {
             throws ServletException {
         super.init(config);
         String relativePath = this.getServletContext().getRealPath("/at.kaindorf.res/contacts.json");
-        contactList = IO_Handler.getAllContacts(relativePath);
+        contactList = JSONAccess.getAllContacts(relativePath);
         System.out.println(contactList.size());
         for (Contact contact : contactList) {
             System.out.println(contact);

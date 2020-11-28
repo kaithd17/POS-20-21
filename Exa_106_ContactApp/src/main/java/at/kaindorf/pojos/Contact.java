@@ -5,12 +5,12 @@
  */
 package at.kaindorf.pojos;
 
-import at.kaindorf.io.DateDeserializer;
+import at.kaindorf.json.DateDeserializer;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import java.time.LocalDate;
-import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 /**
@@ -20,11 +20,12 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@EqualsAndHashCode
 public class Contact {
     private int id;
     private String firstname;
     private String lastname;
-    private List<String> email;
+    private String[] email;
     private String gender;
     @JsonDeserialize(using = DateDeserializer.class)
     private LocalDate dateOfBirth;
