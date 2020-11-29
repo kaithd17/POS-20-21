@@ -19,14 +19,61 @@
             <div class="header">
                 <h1>ContactApp</h1>
             </div>
-            <div class="filterContainer">
-                <span></span>
+            <div class="sortFilterContainer">
+                <div class="borderContainer">
+                    <table border="0">
+                        <tbody>
+                            <tr>
+                                <td class="labelText">Name:</td>
+                                <td><input type="text" name="name" value="" class="textfield"/></td>
+                            </tr>
+                            <tr>
+                                <td class="labelText">Sort By: </td>
+                                <td>
+                                    <select name="sortSelector" class="selectors">
+                                        <option><c:out value="<None>"/></option>
+                                        <option>Name</option>
+                                        <option>Name+Company</option>
+                                        <option>Age</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="labelText">Company:</td>
+                                <td>
+                                    <select name="companySelector" class="selectors">
+                                        <option><c:out value="<None>"/></option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="labelText">Gender:</td>
+                                <td>
+                                    <select name="genderSelector" class="selectors">
+                                        <option><c:out value="<None>"/></option>
+                                        <option>Male</option>
+                                        <option>Female</option>
+                                    </select>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="buttonGroup">
+                <div class="buttonBorder">
+                    <input type="submit" value="Favourite" name="favourite" class="buttonClass"/>
+                    <input type="submit" value="Delete" name="delete" class="buttonClass"/>
+                    <input type="submit" value="Sort" name="sort" class="buttonClass"/>
+                    <input type="submit" value="Filter" name="filter" class="buttonClass"/>
+                    <input type="submit" value="Save Favourite" name="save" class="buttonClass"/>
+                </div>
             </div>
             <div class="contactTableContainer">
                 <table border="0" class="contactTable">
                     <thead>
                         <tr>
-                            <th class="tableHeader"></th>
                             <th class="tableHeader"></th>
                             <th class="tableHeader">Firstname:</th>
                             <th class="tableHeader">Lastname:</th>
@@ -40,8 +87,7 @@
                     <tbody>
                         <c:forEach var="contact" items="${sessionScope.contactList}" varStatus="counter">
                             <tr>
-                                <td class=${counter.index%2 == 0 ? "contactElement" : "contactElementGray"}><input type="checkbox" name="userPick" value="ON" /></td>
-                                <td class=${counter.index%2 == 0 ? "contactElement" : "contactElementGray"}><i class="fas fa-user"></i></td>
+                                <td class=${counter.index%2 == 0 ? "contactElement" : "contactElementGray"}><input type="checkbox" name="userPick" value="${contact.getId()}" /></td>
                                 <td class=${counter.index%2 == 0 ? "contactElement" : "contactElementGray"}>${contact.getFirstname()}</td>
                                 <td class=${counter.index%2 == 0 ? "contactElement" : "contactElementGray"}>${contact.getLastname()}</td>
                                 <td class=${counter.index%2 == 0 ? "contactElement" : "contactElementGray"}>
