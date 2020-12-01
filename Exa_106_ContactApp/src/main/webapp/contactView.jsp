@@ -28,17 +28,6 @@
                                 <td><input type="text" name="name" value="" class="textfield"/></td>
                             </tr>
                             <tr>
-                                <td class="labelText">Sort By: </td>
-                                <td>
-                                    <select name="sortSelector" class="selectors">
-                                        <option><c:out value="<None>"/></option>
-                                        <option>Name</option>
-                                        <option>Name+Company</option>
-                                        <option>Age</option>
-                                    </select>
-                                </td>
-                            </tr>
-                            <tr>
                                 <td class="labelText">Company:</td>
                                 <td>
                                     <select name="companySelector" class="selectors">
@@ -55,19 +44,28 @@
                                         <option>Female</option>
                                     </select>
                                 </td>
+                                <td><input type="submit" value="Filter" name="filter" class="buttonClass"/></td>
+                            </tr>
+                            <tr>
+                                <td class="labelText">Sort By: </td>
+                                <td>
+                                    <select name="sortSelector" class="selectors">
+                                        <option><c:out value="<None>"/></option>
+                                        <option>Name</option>
+                                        <option>Name+Company</option>
+                                        <option>Age</option>
+                                    </select>
+                                </td>
+                                <td><input type="submit" value="Sort" name="sort" class="buttonClass"/></td>
                             </tr>
                         </tbody>
                     </table>
-                </div>
-            </div>
-
-            <div class="buttonGroup">
-                <div class="buttonBorder">
-                    <input type="submit" value="Favourite" name="favourite" class="buttonClass"/>
-                    <input type="submit" value="Delete" name="delete" class="buttonClass"/>
-                    <input type="submit" value="Sort" name="sort" class="buttonClass"/>
-                    <input type="submit" value="Filter" name="filter" class="buttonClass"/>
-                    <input type="submit" value="Save Favourite" name="save" class="buttonClass"/>
+                    <br>
+                    <div class="buttonBorder">
+                        <input type="submit" value="set Favourite" name="favourite" class="buttonClass"/>
+                        <input type="submit" value="Delete" name="delete" class="buttonClass"/>
+                        <input type="submit" value="Save Favourite" name="save" class="buttonClass"/>
+                    </div>
                 </div>
             </div>
             <div class="contactTableContainer">
@@ -75,13 +73,13 @@
                     <thead>
                         <tr>
                             <th class="tableHeader"></th>
-                            <th class="tableHeader">Firstname:</th>
-                            <th class="tableHeader">Lastname:</th>
-                            <th class="tableHeader">Email:</th>
-                            <th class="tableHeader">Birthday:</th>
-                            <th class="tableHeader">Company:</th>
-                            <th class="tableHeader">Stockmarket:</th>
-                            <th class="tableHeader">Favourites:</th>
+                            <th class="tableHeader">Firstname</th>
+                            <th class="tableHeader">Lastname</th>
+                            <th class="tableHeader">Email</th>
+                            <th class="tableHeader">Birthday</th>
+                            <th class="tableHeader">Company</th>
+                            <th class="tableHeader">Stockmarket</th>
+                            <th class="tableHeader">Favourites</th>
                         </tr>
                     </thead>
                     <tbody>

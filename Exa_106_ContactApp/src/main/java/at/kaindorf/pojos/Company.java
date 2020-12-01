@@ -5,7 +5,6 @@
  */
 package at.kaindorf.pojos;
 
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.List;
@@ -23,6 +22,7 @@ import lombok.ToString;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Company implements Comparable<Company>, Serializable{
+
     @EqualsAndHashCode.Include
     private String name;
     @EqualsAndHashCode.Include
@@ -34,6 +34,7 @@ public class Company implements Comparable<Company>, Serializable{
 
     @Override
     public int compareTo(Company o) {
-        return this.name.compareTo(o.getName());
+         return this.name.compareTo(o.getName());
     }
+
 }
