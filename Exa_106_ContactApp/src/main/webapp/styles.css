@@ -63,10 +63,21 @@ tr {
     color: black;
 }
 
+.contactElementStar {
+    padding: 0.5% 0px 0.5% 0px;
+    color: gold;
+}
+
 .contactElementGray {
     padding: 0.5% 0px 0.5% 0px;
     background-color: lightgray;
     color: black;
+}
+
+.contactElementGrayStar {
+    padding: 0.5% 0px 0.5% 0px;
+    background-color: lightgray;
+    color: gold;
 }
 
 .sortFilterContainer {
@@ -75,7 +86,7 @@ tr {
     justify-content: center;
     align-content: center;
     text-align: left;
-    
+
 }    
 
 .buttonGroup {
@@ -98,7 +109,7 @@ tr {
     align-content: center;
     padding: 0.5%;
     background-color: lightgray;
-    
+
 }
 
 .selectors {

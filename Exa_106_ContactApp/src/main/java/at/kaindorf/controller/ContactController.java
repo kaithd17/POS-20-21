@@ -5,11 +5,16 @@
  */
 package at.kaindorf.controller;
 
+import at.kaindorf.bl.ContactListModel;
 import at.kaindorf.json.JSONAccess;
 import java.io.IOException;
 import at.kaindorf.pojos.Contact;
 import java.util.ArrayList;
+import at.kaindorf.pojos.Company;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.TreeSet;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -23,7 +28,10 @@ import javax.servlet.http.HttpServletResponse;
  */
 @WebServlet(name = "ContactController", urlPatterns = {"/ContactController"})
 public class ContactController extends HttpServlet {
+
     private List<Contact> contactList = new ArrayList<>();
+    private List<Contact> filteredList = new ArrayList<>();
+    private ContactListModel clm = new ContactListModel();
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -34,23 +42,19 @@ public class ContactController extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    
-    
     @Override
     public void init(ServletConfig config)
             throws ServletException {
-        super.init(config); 
+        super.init(config);
         String relativePath = this.getServletContext().getRealPath("/at.kaindorf.res/contacts.json");
         contactList = JSONAccess.getAllContacts(relativePath);
-        System.out.println(contactList.size());
-        for (Contact contact : contactList) {
-            System.out.println(contact);
-        }
+        filteredList.addAll(contactList);
     }
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        request.getSession().setAttribute("contactList", contactList);
+        request.getSession().setAttribute("contactList", filteredList);
+        request.getSession().setAttribute("companySet", clm.getAllCompanies(contactList));
         request.getRequestDispatcher("contactView.jsp").forward(request, response);
     }
 
@@ -80,6 +84,32 @@ public class ContactController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        Map<String, String[]> parameterMap = request.getParameterMap();
+        if (request.getParameter("favourite") != null) {
+            for (String id : parameterMap.get("userPick")) {
+                filteredList.get(Integer.parseInt(id) - 1).setFavourite(true);
+            }
+        }
+
+        if (request.getParameter("delete") != null) {
+            for (String id : parameterMap.get("userPick")) {
+                filteredList.removeIf(c -> c.getId() == Integer.parseInt(id));
+            }
+        }
+
+        if (request.getParameter("filterButton") != null) {
+            filteredList.clear();
+            filteredList.addAll(contactList);
+            List<String> conditionList = new ArrayList<>();
+            for (String filterCondition : parameterMap.get("filter")) {
+                System.out.println(filterCondition);
+                if (filterCondition.equals("<None>")) {
+                    filterCondition = "";
+                }
+                conditionList.add(filterCondition);
+            }
+            clm.filterContacts(filteredList, conditionList);
+        }
         processRequest(request, response);
     }
 

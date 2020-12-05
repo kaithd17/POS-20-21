@@ -25,26 +25,29 @@
                         <tbody>
                             <tr>
                                 <td class="labelText">Name:</td>
-                                <td><input type="text" name="name" value="" class="textfield"/></td>
+                                <td><input type="text" name="filter" value="" class="textfield"/></td>
                             </tr>
                             <tr>
                                 <td class="labelText">Company:</td>
                                 <td>
-                                    <select name="companySelector" class="selectors">
+                                    <select name="filter" class="selectors">
                                         <option><c:out value="<None>"/></option>
+                                        <c:forEach var="company" items="${sessionScope.companySet}">
+                                            <option>${company.getName()}</option>
+                                        </c:forEach>
                                     </select>
                                 </td>
                             </tr>
                             <tr>
                                 <td class="labelText">Gender:</td>
                                 <td>
-                                    <select name="genderSelector" class="selectors">
+                                    <select name="filter" class="selectors">
                                         <option><c:out value="<None>"/></option>
                                         <option>Male</option>
                                         <option>Female</option>
                                     </select>
                                 </td>
-                                <td><input type="submit" value="Filter" name="filter" class="buttonClass"/></td>
+                                <td><input type="submit" value="Filter" name="filterButton" class="buttonClass"/></td>
                             </tr>
                             <tr>
                                 <td class="labelText">Sort By: </td>
@@ -62,7 +65,7 @@
                     </table>
                     <br>
                     <div class="buttonBorder">
-                        <input type="submit" value="set Favourite" name="favourite" class="buttonClass"/>
+                        <input type="submit" value="Set Favourite" name="favourite" class="buttonClass"/>
                         <input type="submit" value="Delete" name="delete" class="buttonClass"/>
                         <input type="submit" value="Save Favourite" name="save" class="buttonClass"/>
                     </div>
@@ -85,7 +88,7 @@
                     <tbody>
                         <c:forEach var="contact" items="${sessionScope.contactList}" varStatus="counter">
                             <tr>
-                                <td class=${counter.index%2 == 0 ? "contactElement" : "contactElementGray"}><input type="checkbox" name="userPick" value="${contact.getId()}" /></td>
+                                <td class=${counter.index%2 == 0 ? "contactElement" : "contactElementGray"}><input type="checkbox" name="${String.format("userPick")}" value="${contact.getId()}" /></td>
                                 <td class=${counter.index%2 == 0 ? "contactElement" : "contactElementGray"}>${contact.getFirstname()}</td>
                                 <td class=${counter.index%2 == 0 ? "contactElement" : "contactElementGray"}>${contact.getLastname()}</td>
                                 <td class=${counter.index%2 == 0 ? "contactElement" : "contactElementGray"}>
@@ -99,10 +102,10 @@
                                 <td class=${counter.index%2 == 0 ? "contactElement" : "contactElementGray"}>${contact.getCompany().getStockmarket()}</td>
                                 <c:choose>
                                     <c:when test="${contact.isFavourite()}">
-                                        <td class=${counter.index%2 == 0 ? "contactElement" : "contactElementGray"}><i class="fas fa-star"></i></td>  
+                                        <td class=${counter.index%2 == 0 ? "contactElementStar" : "contactElementGrayStar"}><i class="fas fa-star"></i></td>  
                                         </c:when>
                                         <c:otherwise>
-                                        <td class=${counter.index%2 == 0 ? "contactElement" : "contactElementGray"}></td>  
+                                        <td class=${counter.index%2 == 0 ? "contactElementStar" : "contactElementGrayStar"}></td>  
                                     </c:otherwise>
                                 </c:choose>
                             </tr>
