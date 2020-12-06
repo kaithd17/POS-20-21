@@ -8,8 +8,11 @@ package at.kaindorf.pojos;
 import at.kaindorf.json.DateDeserializer;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import java.io.Serializable;
 import java.time.LocalDate;
+import java.time.Period;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -23,7 +26,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode
-public class Contact {
+public class Contact implements Serializable{
     private static final DateTimeFormatter DTF = DateTimeFormatter.ofPattern("dd.MM.YYYY");
 
     private int id;
@@ -39,5 +42,9 @@ public class Contact {
     
     public String formatDate(){
         return String.format("%s",DTF.format(dateOfBirth));
+    }
+    
+    public long getAge() {
+        return ChronoUnit.DAYS.between(dateOfBirth, LocalDate.now());
     }
 }

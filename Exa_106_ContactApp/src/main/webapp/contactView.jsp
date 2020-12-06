@@ -47,7 +47,7 @@
                                         <option>Female</option>
                                     </select>
                                 </td>
-                                <td><input type="submit" value="Filter" name="filterButton" class="buttonClass"/></td>
+                                <td><input type="submit" value="Filter" name="buttonClick" class="buttonClass"/></td>
                             </tr>
                             <tr>
                                 <td class="labelText">Sort By: </td>
@@ -59,15 +59,18 @@
                                         <option>Age</option>
                                     </select>
                                 </td>
-                                <td><input type="submit" value="Sort" name="sort" class="buttonClass"/></td>
+                                <td>
+                                    <input type="submit" value="Sort" name="buttonClick" class="buttonClass"/>
+                                    <input type="submit" value="Sort Reverse" name="buttonClick" class="buttonClass"/>
+                                </td>
                             </tr>
                         </tbody>
                     </table>
                     <br>
                     <div class="buttonBorder">
-                        <input type="submit" value="Set Favourite" name="favourite" class="buttonClass"/>
-                        <input type="submit" value="Delete" name="delete" class="buttonClass"/>
-                        <input type="submit" value="Save Favourite" name="save" class="buttonClass"/>
+                        <input type="submit" value="Set Favourite" name="buttonClick" class="buttonClass"/>
+                        <input type="submit" value="Delete" name="buttonClick" class="buttonClass"/>
+                        <input type="submit" value="Save Favourite" name="buttonClick" class="buttonClass"/>
                     </div>
                 </div>
             </div>

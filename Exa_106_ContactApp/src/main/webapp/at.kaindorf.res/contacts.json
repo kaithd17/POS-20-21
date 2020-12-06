@@ -122,7 +122,7 @@
 {"id":122,"firstname":"Lindsy","lastname":"Goman","email":["lgoman3d@columbia.edu","lgoman3d@meetup.com"],"gender":"Female","dateOfBirth":"24/04/1997","company":{"name":"Apple","stockmarket":"NYSE"}},
 {"id":123,"firstname":"Steve","lastname":"Benoey","email":["sbenoey3e@youtube.com","sbenoey3e@msu.edu"],"gender":"Male","dateOfBirth":"30/09/1996","company":{"name":"Facebook","stockmarket":"NASDAQ"}},
 {"id":124,"firstname":"Michelina","lastname":"Goadsby","email":["mgoadsby3f@senate.gov","mgoadsby3f@nsw.gov.au"],"gender":"Female","dateOfBirth":"25/11/2002","company":{"name":"Apple","stockmarket":"NASDAQ"}},
-{"id":125,"firstname":"Alecia","lastname":"holmes","email":["aholmes3g@sciencedirect.com","aholmes3g@naver.com"],"gender":"Female","dateOfBirth":"02/12/1985","company":{"name":"Cisco","stockmarket":"NASDAQ"}},
+{"id":125,"firstname":"Alecia","lastname":"Holmes","email":["aholmes3g@sciencedirect.com","aholmes3g@naver.com"],"gender":"Female","dateOfBirth":"02/12/1985","company":{"name":"Cisco","stockmarket":"NASDAQ"}},
 {"id":126,"firstname":"Cammie","lastname":"Wrathmall","email":["cwrathmall3h@ibm.com","cwrathmall3h@flavors.me"],"gender":"Female","dateOfBirth":"28/02/1970","company":{"name":"IBM","stockmarket":"NASDAQ"}},
 {"id":127,"firstname":"Celina","lastname":"Hauxwell","email":["chauxwell3i@house.gov","chauxwell3i@github.com"],"gender":"Female","dateOfBirth":"15/09/1997","company":{"name":"Apple","stockmarket":"NYSE"}},
 {"id":128,"firstname":"Florance","lastname":"Bruneau","email":["fbruneau3j@webnode.com","fbruneau3j@booking.com"],"gender":"Female","dateOfBirth":"04/12/1984","company":{"name":"Cisco","stockmarket":"NYSE"}},

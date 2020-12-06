@@ -45,11 +45,11 @@ h1 {
 
 .contactTable {
     border-collapse: collapse;
-    border: 3px solid black;
+    border: 5px solid black;
 }
 
 tr {
-    border-bottom: 3px solid black;
+    border-bottom: 4px solid black;
 }
 
 .tableHeader {
@@ -86,7 +86,6 @@ tr {
     justify-content: center;
     align-content: center;
     text-align: left;
-
 }    
 
 .buttonGroup {
@@ -96,10 +95,11 @@ tr {
 }
 
 .borderContainer {
-    border: 3px solid black;
+    border: 5px solid black;
     min-width: 20%;
     background-color: lightgray;
     padding: 0.5%;
+    border-radius: 12px;
 }
 
 .buttonBorder {
@@ -109,7 +109,6 @@ tr {
     align-content: center;
     padding: 0.5%;
     background-color: lightgray;
-
 }
 
 .selectors {
@@ -137,6 +136,7 @@ tr {
     border: none;
     padding: 6px 8px;
     font-size: 15px;
+    border-radius: 7px;
 }
 
 input:focus {

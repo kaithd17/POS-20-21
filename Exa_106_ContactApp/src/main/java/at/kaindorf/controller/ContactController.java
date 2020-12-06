@@ -11,6 +11,7 @@ import java.io.IOException;
 import at.kaindorf.pojos.Contact;
 import java.util.ArrayList;
 import at.kaindorf.pojos.Company;
+import java.time.Period;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -85,30 +86,50 @@ public class ContactController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         Map<String, String[]> parameterMap = request.getParameterMap();
-        if (request.getParameter("favourite") != null) {
-            for (String id : parameterMap.get("userPick")) {
-                filteredList.get(Integer.parseInt(id) - 1).setFavourite(true);
-            }
-        }
-
-        if (request.getParameter("delete") != null) {
-            for (String id : parameterMap.get("userPick")) {
-                filteredList.removeIf(c -> c.getId() == Integer.parseInt(id));
-            }
-        }
-
-        if (request.getParameter("filterButton") != null) {
-            filteredList.clear();
-            filteredList.addAll(contactList);
-            List<String> conditionList = new ArrayList<>();
-            for (String filterCondition : parameterMap.get("filter")) {
-                System.out.println(filterCondition);
-                if (filterCondition.equals("<None>")) {
-                    filterCondition = "";
+        String buttonClicked = request.getParameter("buttonClick");
+        
+        switch (buttonClicked) {
+            case "Set Favourite":
+                for (String id : parameterMap.get("userPick")) {
+                    for (Contact contact : filteredList) {
+                        if (contact.getId() == Integer.parseInt(id)) {
+                            contact.setFavourite(true);
+                        }
+                    }
                 }
-                conditionList.add(filterCondition);
-            }
-            clm.filterContacts(filteredList, conditionList);
+                break;
+                
+            case "Delete":
+                for (String id : parameterMap.get("userPick")) {
+                    filteredList.removeIf(c -> c.getId() == Integer.parseInt(id));
+                }
+                break;
+                
+            case "Filter":
+                filteredList.clear();
+                filteredList.addAll(contactList);
+                List<String> conditionList = new ArrayList<>();
+                for (String filterCondition : parameterMap.get("filter")) {
+                    if (filterCondition.equals("<None>")) {
+                        filterCondition = "";
+                    }
+                    conditionList.add(filterCondition);
+                }
+                clm.filterContacts(filteredList, conditionList);
+                break;
+                
+            case "Sort":
+                String sortCodition = request.getParameter("sortSelector");
+                clm.sortList(filteredList, sortCodition);
+                break;
+                
+            case "Sort Reverse":
+                String sortCoditionReverse = request.getParameter("sortSelector") + "Reverse";
+                clm.sortList(filteredList, sortCoditionReverse);
+                break;
+                
+            default:
+                break;
         }
         processRequest(request, response);
     }
