@@ -12,7 +12,12 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import java.io.File;
 import java.io.IOException;
 import at.kaindorf.pojos.Company;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -41,5 +46,20 @@ public class JSONAccess {
             System.out.println(ex.toString());
         }
         return null;
+    }
+    
+    public static void writeFavouritesOnFiles(List<Contact> contactList) {
+        ObjectMapper objectmapper = new ObjectMapper();
+        String path = "D:\\HTL-Kaindorf\\4DHIF\\POS-20-21\\Exa_106_ContactApp\\src\\main\\webapp\\at.kaindorf.res";
+        try {
+            String favouriteContacts = objectmapper.writeValueAsString(contactList);
+            BufferedWriter bw = new BufferedWriter(new FileWriter(new File(path)));
+            bw.write(favouriteContacts);
+            bw.close();
+        } catch (JsonProcessingException ex) {
+            System.out.println(ex.toString());
+        } catch (IOException ex) {
+            System.out.println(ex.toString());
+        }
     }
 }

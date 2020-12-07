@@ -8,7 +8,6 @@ package at.kaindorf.bl;
 import java.util.List;
 import at.kaindorf.pojos.Contact;
 import at.kaindorf.pojos.Company;
-import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Set;
 import java.util.TreeSet;
@@ -28,13 +27,11 @@ public class ContactListModel {
     }
 
     public Set<Company> getAllCompanies(List<Contact> contactList) {
-        Set<Company> companyList = new TreeSet<>();
+        Set<Company> companySet = new TreeSet<>();
         for (Contact contact : contactList) {
-            if (!(companyList.contains(contact.getCompany()))) {
-                companyList.add(contact.getCompany());
-            }
+            companySet.add(contact.getCompany());
         }
-        return companyList;
+        return companySet;
     }
 
     public void sortList(List<Contact> filteredList, String condition) {
@@ -63,7 +60,13 @@ public class ContactListModel {
         }
     }
 
-    public void setFavouritesAgain(Set<String> idSet) {
-
+    public void setContactAsFavourite(List<Contact> contactList, String[] idArray) {
+        for (String id : idArray) {
+            for (Contact contact : contactList) {
+                if (contact.getId() == Integer.parseInt(id)) {
+                    contact.setFavourite(true);
+                }
+            }
+        }
     }
 }

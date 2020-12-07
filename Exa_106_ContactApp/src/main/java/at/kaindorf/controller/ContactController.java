@@ -10,12 +10,11 @@ import at.kaindorf.json.JSONAccess;
 import java.io.IOException;
 import at.kaindorf.pojos.Contact;
 import java.util.ArrayList;
-import at.kaindorf.pojos.Company;
-import java.time.Period;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
+import java.util.stream.Collectors;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -31,7 +30,6 @@ import javax.servlet.http.HttpServletResponse;
 public class ContactController extends HttpServlet {
 
     private List<Contact> contactList = new ArrayList<>();
-    private List<Contact> filteredList = new ArrayList<>();
     private ContactListModel clm = new ContactListModel();
 
     /**
@@ -49,13 +47,17 @@ public class ContactController extends HttpServlet {
         super.init(config);
         String relativePath = this.getServletContext().getRealPath("/at.kaindorf.res/contacts.json");
         contactList = JSONAccess.getAllContacts(relativePath);
-        filteredList.addAll(contactList);
     }
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        request.getSession().setAttribute("contactList", filteredList);
-        request.getSession().setAttribute("companySet", clm.getAllCompanies(contactList));
+        if (request.getSession().getAttribute("contactList") == null) {
+            List<Contact> sessionContactList = contactList.stream().map(c -> c.clone()).collect(Collectors.toList());
+            List<Contact> filteredList = new ArrayList<>(sessionContactList);
+            request.getSession().setAttribute("contactList", filteredList);
+            request.getSession().setAttribute("sessionList", sessionContactList);
+            request.getSession().setAttribute("companySet", clm.getAllCompanies(contactList));
+        }
         request.getRequestDispatcher("contactView.jsp").forward(request, response);
     }
 
@@ -85,29 +87,26 @@ public class ContactController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+
+        List<Contact> sessionList = (List) request.getSession().getAttribute("sessionList");
+        List<Contact> filteredList = new ArrayList<>(sessionList);
+        
         Map<String, String[]> parameterMap = request.getParameterMap();
         String buttonClicked = request.getParameter("buttonClick");
-        
+
         switch (buttonClicked) {
             case "Set Favourite":
-                for (String id : parameterMap.get("userPick")) {
-                    for (Contact contact : filteredList) {
-                        if (contact.getId() == Integer.parseInt(id)) {
-                            contact.setFavourite(true);
-                        }
-                    }
-                }
+                clm.setContactAsFavourite(filteredList, parameterMap.get("userPick"));
                 break;
-                
+
             case "Delete":
                 for (String id : parameterMap.get("userPick")) {
                     filteredList.removeIf(c -> c.getId() == Integer.parseInt(id));
+                    sessionList.removeIf(c -> c.getId() == Integer.parseInt(id));
                 }
                 break;
-                
+
             case "Filter":
-                filteredList.clear();
-                filteredList.addAll(contactList);
                 List<String> conditionList = new ArrayList<>();
                 for (String filterCondition : parameterMap.get("filter")) {
                     if (filterCondition.equals("<None>")) {
@@ -117,20 +116,31 @@ public class ContactController extends HttpServlet {
                 }
                 clm.filterContacts(filteredList, conditionList);
                 break;
-                
+
             case "Sort":
                 String sortCodition = request.getParameter("sortSelector");
                 clm.sortList(filteredList, sortCodition);
                 break;
-                
+
             case "Sort Reverse":
                 String sortCoditionReverse = request.getParameter("sortSelector") + "Reverse";
                 clm.sortList(filteredList, sortCoditionReverse);
                 break;
-                
+
+            case "Save Favourite":
+                List<Contact> favourites = new ArrayList<>();
+                for (Contact contact : sessionList) {
+                    if (contact.isFavourite()) {
+                        favourites.add(contact);
+                    }
+                }
+                JSONAccess.writeFavouritesOnFiles(favourites);
+                break;
+
             default:
                 break;
         }
+        request.getSession().setAttribute("contactList", filteredList);
         processRequest(request, response);
     }
 

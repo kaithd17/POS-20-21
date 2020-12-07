@@ -5,9 +5,11 @@
  */
 package at.kaindorf.pojos;
 
+import at.kaindorf.json.ContactSerializer;
 import at.kaindorf.json.DateDeserializer;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.Period;
@@ -26,6 +28,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode
+@JsonSerialize(using = ContactSerializer.class)
 public class Contact implements Serializable{
     private static final DateTimeFormatter DTF = DateTimeFormatter.ofPattern("dd.MM.YYYY");
 
@@ -46,5 +49,9 @@ public class Contact implements Serializable{
     
     public long getAge() {
         return ChronoUnit.DAYS.between(dateOfBirth, LocalDate.now());
+    }
+    
+    public Contact clone (){
+        return new Contact(id,firstname,lastname,email,gender,dateOfBirth,company,favourite);
     }
 }
