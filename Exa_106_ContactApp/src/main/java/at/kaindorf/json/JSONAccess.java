@@ -15,9 +15,9 @@ import at.kaindorf.pojos.Company;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -50,9 +50,10 @@ public class JSONAccess {
     
     public static void writeFavouritesOnFiles(List<Contact> contactList) {
         ObjectMapper objectmapper = new ObjectMapper();
-        String path = "D:\\HTL-Kaindorf\\4DHIF\\POS-20-21\\Exa_106_ContactApp\\src\\main\\webapp\\at.kaindorf.res";
+        String filename = "favourites-" + LocalDate.now() +  ".json";
+        String path = "D:\\HTL-Kaindorf\\4DHIF\\POS-20-21\\Exa_106_ContactApp\\src\\main\\webapp\\at.kaindorf.res\\"+filename;
         try {
-            String favouriteContacts = objectmapper.writeValueAsString(contactList);
+            String favouriteContacts = objectmapper.writerWithDefaultPrettyPrinter().writeValueAsString(contactList);
             BufferedWriter bw = new BufferedWriter(new FileWriter(new File(path)));
             bw.write(favouriteContacts);
             bw.close();
