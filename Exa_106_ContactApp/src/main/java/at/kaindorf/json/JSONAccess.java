@@ -48,10 +48,10 @@ public class JSONAccess {
         return null;
     }
     
-    public static void writeFavouritesOnFiles(List<Contact> contactList) {
+    public static void writeFavouritesOnFiles(List<Contact> contactList, String path) {
         ObjectMapper objectmapper = new ObjectMapper();
-        String filename = "favourites-" + LocalDate.now() +  ".json";
-        String path = "D:\\HTL-Kaindorf\\4DHIF\\POS-20-21\\Exa_106_ContactApp\\src\\main\\webapp\\at.kaindorf.res\\"+filename;
+        String filename = "/favourites-" + LocalDate.now() +  ".json";
+        path += filename;
         try {
             String favouriteContacts = objectmapper.writerWithDefaultPrettyPrinter().writeValueAsString(contactList);
             BufferedWriter bw = new BufferedWriter(new FileWriter(new File(path)));

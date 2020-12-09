@@ -87,9 +87,11 @@ public class ContactController extends HttpServlet {
             throws ServletException, IOException {
 
         List<Contact> sessionList = (List) request.getSession().getAttribute("sessionList");
-        List<Contact> filteredList = new ArrayList<>(sessionList);
+        List<Contact> filteredList = (List) request.getSession().getAttribute("contactList");
+        List<String> conditionList = new ArrayList<>();
         
         Map<String, String[]> parameterMap = request.getParameterMap();
+        String sortCodition = "";
         String buttonClicked = request.getParameter("buttonClick");
 
         switch (buttonClicked) {
@@ -105,23 +107,22 @@ public class ContactController extends HttpServlet {
                 break;
 
             case "Filter":
-                List<String> conditionList = new ArrayList<>();
-                for (String filterCondition : parameterMap.get("filter")) {
-                    if (filterCondition.equals("<None>")) {
-                        filterCondition = "";
-                    }
-                    conditionList.add(filterCondition);
-                }
+                filteredList.clear();
+                filteredList.addAll(sessionList);
+                clm.fillList(conditionList, parameterMap.get("filter"));
                 clm.filterContacts(filteredList, conditionList);
                 break;
 
             case "Sort":
-                String sortCodition = request.getParameter("sortSelector");
+                sortCodition = request.getParameter("sortSelector");
+                clm.fillList(conditionList, parameterMap.get("filter"));
                 clm.sortList(filteredList, sortCodition);
                 break;
 
             case "Sort Reverse":
                 String sortCoditionReverse = request.getParameter("sortSelector") + "Reverse";
+                sortCodition = request.getParameter("sortSelector");
+                clm.fillList(conditionList, parameterMap.get("filter"));
                 clm.sortList(filteredList, sortCoditionReverse);
                 break;
 
@@ -132,13 +133,18 @@ public class ContactController extends HttpServlet {
                         favourites.add(contact);
                     }
                 }
-                JSONAccess.writeFavouritesOnFiles(favourites);
+                String filepath = request.getSession().getServletContext().getRealPath("/at.kaindorf.res");
+                JSONAccess.writeFavouritesOnFiles(favourites,filepath);
                 break;
 
             default:
                 break;
         }
         request.getSession().setAttribute("contactList", filteredList);
+        request.setAttribute("sortCondition", sortCodition);
+        if (conditionList.size() > 0) {
+            request.setAttribute("conditionList", conditionList);
+        }
         processRequest(request, response);
     }
 

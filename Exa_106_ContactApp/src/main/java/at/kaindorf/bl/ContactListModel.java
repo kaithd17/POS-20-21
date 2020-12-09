@@ -69,4 +69,13 @@ public class ContactListModel {
             }
         }
     }
+
+    public void fillList(List<String> conditionList, String[] parameterArray) {
+        for (String filterCondition : parameterArray) {
+            if (filterCondition.equals("<None>")) {
+                filterCondition = "";
+            }
+            conditionList.add(filterCondition);
+        }
+    }
 }

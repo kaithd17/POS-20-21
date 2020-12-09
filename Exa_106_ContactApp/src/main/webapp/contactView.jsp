@@ -25,7 +25,14 @@
                         <tbody>
                             <tr>
                                 <td class="labelText">Name:</td>
-                                <td><input type="text" name="filter" value="" class="textfield"/></td>
+                                <c:choose>
+                                    <c:when test="${conditionList.get(0) != ''}">
+                                        <td><input type="text" name="filter" value="${conditionList.get(0)}" class="textfield"/></td>
+                                        </c:when>
+                                        <c:otherwise>
+                                        <td><input type="text" name="filter" value="" class="textfield"/></td>
+                                        </c:otherwise>
+                                    </c:choose>
                             </tr>
                             <tr>
                                 <td class="labelText">Company:</td>
@@ -33,7 +40,14 @@
                                     <select name="filter" class="selectors">
                                         <option><c:out value="<None>"/></option>
                                         <c:forEach var="company" items="${sessionScope.companySet}">
-                                            <option>${company.getName()}</option>
+                                            <c:choose>
+                                                <c:when test="${company.getName() == conditionList.get(1)}">
+                                                    <option selected>${company.getName()}</option>
+                                                </c:when>
+                                                <c:otherwise>
+                                                    <option>${company.getName()}</option>
+                                                </c:otherwise>
+                                            </c:choose>
                                         </c:forEach>
                                     </select>
                                 </td>
@@ -42,9 +56,23 @@
                                 <td class="labelText">Gender:</td>
                                 <td>
                                     <select name="filter" class="selectors">
-                                        <option><c:out value="<None>"/></option>
-                                        <option>Male</option>
-                                        <option>Female</option>
+                                        <c:choose>
+                                            <c:when test="${conditionList.get(2) == 'Male'}">
+                                                <option><c:out value="<None>"/></option>
+                                                <option selected>Male</option>
+                                                <option>Female</option>
+                                            </c:when>
+                                            <c:when test="${conditionList.get(2) == 'Female'}">
+                                                <option><c:out value="<None>"/></option>
+                                                <option>Male</option>
+                                                <option selected>Female</option>
+                                            </c:when>
+                                            <c:otherwise>
+                                                <option selected><c:out value="<None>"/></option>
+                                                <option>Male</option>
+                                                <option>Female</option>
+                                            </c:otherwise>
+                                        </c:choose>
                                     </select>
                                 </td>
                                 <td><input type="submit" value="Filter" name="buttonClick" class="buttonClass"/></td>
@@ -53,10 +81,33 @@
                                 <td class="labelText">Sort By: </td>
                                 <td>
                                     <select name="sortSelector" class="selectors">
-                                        <option><c:out value="<None>"/></option>
-                                        <option>Name</option>
-                                        <option>Name+Company</option>
-                                        <option>Age</option>
+                                        <c:choose>
+                                            <c:when test="${sortCondition == 'Name'}">
+                                                <option><c:out value="<None>"/></option>
+                                                <option selected>Name</option>
+                                                <option>Name+Company</option>
+                                                <option>Age</option>
+                                            </c:when>
+                                            <c:when test="${sortCondition == 'Name+Company'}">
+                                                <option><c:out value="<None>"/></option>
+                                                <option>Name</option>
+                                                <option selected>Name+Company</option>
+                                                <option>Age</option>
+                                            </c:when>
+                                            <c:when test="${sortCondition == 'Age'}">
+                                                <option><c:out value="<None>"/></option>
+                                                <option>Name</option>
+                                                <option>Name+Company</option>
+                                                <option selected>Age</option>
+                                            </c:when>
+                                            <c:otherwise>
+                                                <option selected><c:out value="<None>"/></option>
+                                                <option>Name</option>
+                                                <option>Name+Company</option>
+                                                <option>Age</option>
+                                            </c:otherwise>
+                                        </c:choose>
+
                                     </select>
                                 </td>
                                 <td>
