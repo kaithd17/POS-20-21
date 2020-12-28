@@ -20,13 +20,14 @@ import java.util.logging.Logger;
 public class OMDBTest {
     public static void main(String[] args) {
         try {
-            URL url = new URL("http://www.omdbapi.com/?i=tt3896198&apikey=e7c841e0");
+            URL url = new URL("http://www.omdbapi.com/?apikey=e7c841e0&t=Star%20Wars");
             JsonMapper mapper = new JsonMapper();
             JsonNode node = mapper.readTree(url);
             String json = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(node);
-            //System.out.println(json);
-            System.out.println(node.get("Title").asText());
-            System.out.println(node.get("Ratings").get(0).get("Value"));
+            System.out.println(json);
+            //System.out.println(node.get("Search").get(0));
+            //System.out.println(node.get("Ratings").size());
+            //System.out.println(node.get("Ratings").get(0).get("Value"));
             //System.out.println(node.toPrettyString());
         } catch (MalformedURLException ex) {
             System.out.println(ex.toString());
