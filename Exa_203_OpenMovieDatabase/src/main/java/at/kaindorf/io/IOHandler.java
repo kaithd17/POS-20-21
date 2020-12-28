@@ -97,8 +97,6 @@ public class IOHandler {
             temp %= 10;
             if (temp != 0) {
                 pages++;
-            } else {
-                pages--;
             }
             return pages;
         } catch (UnsupportedEncodingException ex) {
@@ -117,7 +115,7 @@ public class IOHandler {
             for (Movie movie : movieList) {
                 System.out.println(movie);
             }
-           int pages = IOHandler.getPages("Star Wars");
+            int pages = IOHandler.getPages("Star Wars");
             System.out.println(pages);
         } catch (NullPointerException ex) {
             System.out.println("No Results");

@@ -18,7 +18,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Movie {
-    private String Title;
+    private String title;
     private String year;
     private String rated;
     private String released;
