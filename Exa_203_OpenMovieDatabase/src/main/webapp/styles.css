@@ -8,3 +8,98 @@ and open the template in the editor.
     Author     : kainz
 */
 
+@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@100;200;300;400;500&display=swap');
+
+body,
+html {
+    width: 100%;
+    height: auto;
+    padding: 0px;
+    margin: 0px;
+    font-family: 'Raleway';
+    background-color: #FFCF99;
+    /*111D4A option 2*/
+}
+
+
+h1 {
+    margin: 0px;
+    padding: 0px;
+    color: #FFF8F0;
+}
+
+.header {
+    height: auto;
+    width: 100%;
+    background-color: #1E1E24;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    padding: 1% 0px 1% 0px;
+}
+
+.controllerContainer {
+    height: auto;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    padding-top: 2%;
+}
+
+.controller {
+    height: auto;
+    max-width: 50%;
+    padding: 2%;
+    box-shadow: 5px 5px 5px 5px #FFF8F0;
+    background-color: #92140C;
+}
+
+.searchContainer {
+    padding-bottom: 5%;
+}
+
+.movieListContainer {
+    height: auto;
+    width: 100%;
+    padding-top: 2%;
+}
+
+.movieList {
+    height: auto;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    flex-direction: column;
+}
+
+.movieObject{
+    height: auto;
+    min-width: 35%;
+    padding: 1% 3% 0.5% 1%;
+    box-shadow: 5px 5px 5px 5px #FFF8F0;
+    margin-bottom: 2%;
+    background-color: #92140C;
+    color: #FFF8F0;
+}
+
+img {
+    max-width: 100px; 
+    height: auto;
+    padding-left: 2%;
+}
+
+.buttonDirection {
+    height: auto;
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+    align-content: flex-end;
+}
+
+.objectText {
+    padding-left: 3%;
+}
