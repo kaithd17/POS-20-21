@@ -16,47 +16,79 @@
     <body>
         <form action="./MovieController" method="POST">
             <div class="header">
-                <h1>MovieDB</h1>
+                <c:choose>
+                    <c:when test="${sessionScope.movieSelected}">
+                        <h1>${sessionScope.userInput}</h1>
+                    </c:when>
+                    <c:otherwise>
+                        <h1>MovieDB</h1>
+                    </c:otherwise>
+                </c:choose>
+            </div>
+
+            <div class="searchContainer">
+                <input type="text" name="searchField" value=""/>
+                <input type="submit" value="Search" name="buttonClick"/>
             </div>
 
             <div class="controllerContainer">
                 <div class="controller">
-                    <div class="searchContainer">
-                        <input type="text" name="searchField" value="" class=/>
-                        <input type="submit" value="Search" />
-                    </div>
-                    <div class="filterSortContainer">
-                        <div class="sortSection">
-                            <select name="sortList">
-                                <option>f</option>
-                                <option>f</option>
-                            </select>
-                            <input type="submit" value="Sort" />
+                    <c:if test="${sessionScope.movieSelected}">
+                        <div class="filterSortContainer">
+                            <div class="sortSection">
+                                <select name="sortList">
+                                    <option><c:out value="<None>"/></option>
+                                    <option>Title</option>
+                                    <option>Realease</option>
+                                </select>
+                                <div class="buttonSort">
+                                    <input type="submit" value="Sort" name="buttonClick" class="buttonClass"/>
+                                </div>
+                            </div>
+                            <div class="filterSection">
+                                <select name="filterList">
+                                    <option><c:out value="<None>"/></option>
+                                    <c:forEach var="genre" items="${sessionScope.genreSet}">
+                                        <option>${genre}</option>
+                                    </c:forEach>
+                                </select>
+                                <div class="buttonFilter">
+                                    <input type="submit" value="Filter" name="buttonClick" class="buttonClass"/>
+                                </div>
+                            </div>
                         </div>
-                        <div class="filterSection">
-                            <select name="filterList">
-                                <option>f</option>
-                                <option>f</option>
-                            </select>
-                            <input type="submit" value="Filter" />
-                        </div>
-                    </div>
+                    </c:if>
                 </div>
             </div>
+
             <div class="movieListContainer">
                 <div class="movieList">
-                    <c:forEach var="movie" items="${applicationScope.movieList}">
+                    <c:forEach var="movie" items="${sessionScope.movieList}">
                         <div class="movieObject">
                             <table border="0" >
                                 <tbody>
                                     <tr>
                                         <td><img src='${movie.getPoster()}'></td>
-                                        <td class="objectText">
-                                            <p>${movie.getTitle()}</p>
-                                            <p>${movie.getYear()}</p>
-                                            <p>${movie.getGenre()}</p>
-                                            <p>${movie.getRuntime()}</p>
-                                        </td>                                       
+                                        <td>
+                                            <table border="0" class="textTable">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Title</th>
+                                                        <th>Year</th>
+                                                        <th>Genre</th>
+                                                        <th>Runtime</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td class="textSpace"><p class="textClass">${movie.getTitle()}</p></td>
+                                                        <td class="textSpace"><p class="textClass">${movie.getYear()}</p></td>
+                                                        <td class="textSpace"><p class="textClass">${movie.getGenre()}</p></td>
+                                                        <td class="textSpace"><p class="textClass">${movie.getRuntime()}</p></td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </td>                                     
                                     </tr>
                                 </tbody>
                             </table>

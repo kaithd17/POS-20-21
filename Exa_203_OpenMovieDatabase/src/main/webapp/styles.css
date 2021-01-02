@@ -17,8 +17,9 @@ html {
     padding: 0px;
     margin: 0px;
     font-family: 'Raleway';
-    background-color: #FFCF99;
-    /*111D4A option 2*/
+    background-color: #1E1E24;
+    /*111D4A option 1
+    #FFCF99 option 2*/
 }
 
 
@@ -35,7 +36,17 @@ h1 {
     display: flex;
     justify-content: center;
     align-content: center;
-    padding: 1% 0px 1% 0px;
+    padding: 1% 0px 0px 0px;
+}
+
+.searchContainer {
+    height: auto;
+    width: 100%;
+    background-color: #1E1E24;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    padding: 2% 0px 0px 0px;
 }
 
 .controllerContainer {
@@ -51,12 +62,8 @@ h1 {
     height: auto;
     max-width: 50%;
     padding: 2%;
-    box-shadow: 5px 5px 5px 5px #FFF8F0;
+    box-shadow: 3px 3px 3px 3px grey;
     background-color: #92140C;
-}
-
-.searchContainer {
-    padding-bottom: 5%;
 }
 
 .movieListContainer {
@@ -67,6 +74,7 @@ h1 {
 
 .movieList {
     height: auto;
+    min-width: 50%;
     width: 100%;
     display: flex;
     justify-content: center;
@@ -77,9 +85,10 @@ h1 {
 
 .movieObject{
     height: auto;
-    min-width: 35%;
+    min-width: 50%;
+    max-width: 50%;
     padding: 1% 3% 0.5% 1%;
-    box-shadow: 5px 5px 5px 5px #FFF8F0;
+    box-shadow: 7px 7px 3.5px grey;
     margin-bottom: 2%;
     background-color: #92140C;
     color: #FFF8F0;
@@ -100,6 +109,40 @@ img {
     align-content: flex-end;
 }
 
-.objectText {
+.textClass {
+    text-align: center;
+
+}
+
+.textSpace {
+    max-width: 25%;
+}
+
+.textTable {
+    table-layout: fixed;
+    width: 100%;
+}
+
+.sortSection {
+    display: flex;
+    justify-content: flex-start;
+    align-content: flex-start;
+}
+
+.filterSection {
+    display: flex;
+    justify-content: flex-start;
+    align-content: flex-start;
+}
+
+.buttonClass {
+
+}
+
+.buttonFilter {
     padding-left: 3%;
+}
+
+.buttonSort {
+    padding-left: 6%;
 }

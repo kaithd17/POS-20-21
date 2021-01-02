@@ -6,6 +6,8 @@
 package at.kaindorf.pojos;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -18,10 +20,11 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Movie {
+    int id;
     private String title;
     private String year;
     private String rated;
-    private String released;
+    private LocalDate released;
     private String runtime;
     private String genre;
     private String director;
@@ -42,4 +45,13 @@ public class Movie {
     private String boxOffice;
     private String production;
     private String website;
+    
+    public long getDays(){
+        return ChronoUnit.DAYS.between(released, LocalDate.now());
+    }
+    
+    public Movie clone() {
+        return new Movie(id, title, year, rated, released, runtime, genre, director, writer, actors, plot, language, country, awards, poster, ratings, metascore, imdbRating, imdbVotes, imdbID, type, dvd, boxOffice, production, website);
+    }
+
 }

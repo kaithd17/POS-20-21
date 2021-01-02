@@ -18,14 +18,19 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.stream.Collectors;
 
 /**
  *
  * @author kainz
  */
 public class IOHandler {
-
+    
+    public static final DateTimeFormatter DTF = DateTimeFormatter.ofPattern("dd-MM-YYYY");
+    
     public static List<Movie> getAllMovies(String searchString, int page) {
         List<Movie> movieList = new ArrayList<>();
         try {
@@ -42,13 +47,16 @@ public class IOHandler {
             //second requests
             URL newURL;
             String[] ratings;
+            int counter = 0;
             for (Movie movie : movieList) {
+                counter++;
                 newURL = new URL("http://www.omdbapi.com/?apikey=e7c841e0&i=" + URLEncoder.encode(movie.getImdbID(), StandardCharsets.UTF_8.toString()));
                 node = mapper.readTree(newURL);
+                movie.setId(counter);
                 movie.setTitle(node.get("Title") != null ? node.get("Title").asText() : "");
                 movie.setYear(node.get("Year") != null ? node.get("Year").asText() : "");
                 movie.setRated(node.get("Rated") != null ? node.get("Rated").asText() : "");
-                movie.setReleased(node.get("Released") != null ? node.get("Released").asText() : "");
+                //movie.setReleased(node.get("Released") != null ? node.get("Released").asText() : "");
                 movie.setRuntime(node.get("Runtime") != null ? node.get("Runtime").asText() : "");
                 movie.setGenre(node.get("Genre") != null ? node.get("Genre").asText() : "");
                 movie.setDirector(node.get("Director") != null ? node.get("Director").asText() : "");
@@ -68,12 +76,18 @@ public class IOHandler {
                 movie.setProduction(node.get("Production") != null ? node.get("Production").asText() : "");
                 movie.setWebsite(node.get("Website") != null ? node.get("Website").asText() : "");
 
+                //get ratings
                 ratings = new String[node.get("Ratings").size()];
                 for (int i = 0; i < ratings.length; i++) {
                     ratings[i] = node.get("Ratings").get(i).get("Source").asText() + ";";
                     ratings[i] += node.get("Ratings").get(i).get("Value").asText();
                 }
                 movie.setRatings(ratings);
+
+                //get release date
+                String relaese = node.get("Released") != null ? node.get("Released").asText() : "";
+                LocalDate released = LocalDate.of(Integer.parseInt(relaese.split(" ")[2]), IOHandler.convertMonth(relaese.split(" ")[1]), Integer.parseInt(relaese.split(" ")[0]));
+                movie.setReleased(released);
             }
             return movieList;
         } catch (MalformedURLException ex) {
@@ -85,7 +99,7 @@ public class IOHandler {
         }
         return movieList;
     }
-
+    
     public static int getPages(String searchString) {
         try {
             URL url = new URL("http://www.omdbapi.com/?apikey=e7c841e0&s=" + URLEncoder.encode(searchString, StandardCharsets.UTF_8.toString()));
@@ -108,15 +122,53 @@ public class IOHandler {
         }
         return 0;
     }
-
+    
+    public static int convertMonth(String nameOfMonth) {
+        switch (nameOfMonth) {
+            case "Jan":
+                return 1;
+            case "Feb":
+                return 2;
+            case "Mar":
+                return 3;
+            case "Apr":
+                return 4;
+            case "May":
+                return 5;
+            case "Jun":
+                return 6;
+            case "Jul":
+                return 7;
+            case "Aug":
+                return 8;
+            case "Sep":
+                return 9;
+            case "Oct":
+                return 10;
+            case "Nov":
+                return 11;
+            case "Dec":
+                return 12;
+            default:
+                return 0;
+        }
+    }
+    
     public static void main(String[] args) {
-       try {
-            List<Movie> movieList = IOHandler.getAllMovies("Star Wars", 2);
-            for (Movie movie : movieList) {
-                System.out.println(movie);
-            }
-            int pages = IOHandler.getPages("Star Wars");
-            System.out.println(pages);
+        try {
+            List<Movie> movieList = IOHandler.getAllMovies("Star Wars", 1);
+//            for (Movie movie : movieList) {
+//                System.out.println(movie.getId());
+//            }
+            
+            List<Movie> movies = movieList.stream().map(m -> m.clone()).collect(Collectors.toList());
+            //            List<Contact> sessionContactList = contactList.stream().map(c -> c.clone()).collect(Collectors.toList());
+            
+            movies.get(0).setTitle("Bitte geh");
+            System.out.println(movieList.get(0).getTitle());
+            System.out.println(movies.get(0).getTitle());
+//            int pages = IOHandler.getPages("Star Wars");
+//            System.out.println(pages);
         } catch (NullPointerException ex) {
             System.out.println(ex.getStackTrace());
             System.out.println("No Results");
