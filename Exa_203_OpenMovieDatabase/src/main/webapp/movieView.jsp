@@ -31,9 +31,9 @@
                 <input type="submit" value="Search" name="buttonClick"/>
             </div>
 
-            <div class="controllerContainer">
-                <div class="controller">
-                    <c:if test="${sessionScope.movieSelected}">
+            <c:if test="${sessionScope.movieSelected}">
+                <div class="controllerContainer">
+                    <div class="controller">
                         <div class="filterSortContainer">
                             <div class="sortSection">
                                 <select name="sortList">
@@ -57,9 +57,10 @@
                                 </div>
                             </div>
                         </div>
-                    </c:if>
+
+                    </div>
                 </div>
-            </div>
+            </c:if>
 
             <div class="movieListContainer">
                 <div class="movieList">
