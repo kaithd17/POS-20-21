@@ -57,10 +57,11 @@ public class IOHandler {
                 }
                 movieList.get(i).setRatings(ratings);
                 String release = newNode.get("Released").asText();
-                LocalDate released = LocalDate.of(Integer.parseInt(release.split(" ")[2]), IOHandler.convertMonth(release.split(" ")[1]), Integer.parseInt(release.split(" ")[0]));
-                movieList.get(i).setReleased(released);
+                if (!release.equals("N/A")) {
+                    LocalDate released = LocalDate.of(Integer.parseInt(release.split(" ")[2]), IOHandler.convertMonth(release.split(" ")[1]), Integer.parseInt(release.split(" ")[0]));
+                    movieList.get(i).setReleased(released);
+                } 
             }
-
             return movieList;
         } catch (MalformedURLException ex) {
             System.out.println(ex.toString());
@@ -94,8 +95,8 @@ public class IOHandler {
         }
         return 0;
     }
-    
-            public static int convertMonth(String nameOfMonth) {
+
+    public static int convertMonth(String nameOfMonth) {
         switch (nameOfMonth) {
             case "Jan":
                 return 1;
@@ -128,12 +129,15 @@ public class IOHandler {
 
     public static void main(String[] args) {
         try {
-            List<Movie> movieList = IOHandler.getAllMovies("Star Wars", 1);
+            List<Movie> movieList = IOHandler.getAllMovies("Star Wars", 2);
             for (Movie movie : movieList) {
-                System.out.println(movie);
+                System.out.println(movie.getYear().substring(0, 4));
+//                if (movie.getReleased() == null) {
+//                    System.out.println("N/A");
+//                } else {
+//                    System.out.println(movie.getReleased());
+//                }
             }
-            int pages = IOHandler.getPages("Star Wars");
-            System.out.println(pages);
         } catch (NullPointerException ex) {
             System.out.println(ex.getStackTrace());
             System.out.println("No Results");

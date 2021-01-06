@@ -27,8 +27,8 @@
             </div>
 
             <div class="searchContainer">
-                <input type="text" name="searchField" value=""/>
-                <input type="submit" value="Search" name="buttonClick"/>
+                <input type="text" name="searchField" value="" class="textfield"/>
+                <input type="submit" value="Search" name="buttonClick" class="buttonClass2"/>
             </div>
 
             <c:if test="${sessionScope.movieSelected}">
@@ -36,20 +36,41 @@
                     <div class="controller">
                         <div class="filterSortContainer">
                             <div class="sortSection">
-                                <select name="sortList">
+                                <select name="sortList" class="selectors">
                                     <option><c:out value="<None>"/></option>
-                                    <option>Title</option>
-                                    <option>Realease</option>
+                                    <c:choose>
+                                        <c:when test="${sessionScope.sortCondition == 'Title'}">
+                                            <option selected>Title</option>
+                                            <option>Realease</option>
+                                        </c:when>
+                                        <c:when test="${sessionScope.sortCondition == 'Realease'}">
+                                            <option>Title</option>
+                                            <option selected>Realease</option>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <option>Title</option>
+                                            <option>Realease</option>
+                                        </c:otherwise>
+                                    </c:choose>
+
                                 </select>
                                 <div class="buttonSort">
                                     <input type="submit" value="Sort" name="buttonClick" class="buttonClass"/>
                                 </div>
                             </div>
                             <div class="filterSection">
-                                <select name="filterList">
+                                <select name="filterList" class="selectors">
                                     <option><c:out value="<None>"/></option>
                                     <c:forEach var="genre" items="${sessionScope.genreSet}">
-                                        <option>${genre}</option>
+                                        <c:choose>
+                                            <c:when test="${sessionScope.filterCondition == genre}">
+                                                <option selected>${genre}</option>
+                                            </c:when>
+                                            <c:otherwise>
+                                                <option>${genre}</option>
+                                            </c:otherwise>
+                                        </c:choose>
+
                                     </c:forEach>
                                 </select>
                                 <div class="buttonFilter">
@@ -57,7 +78,31 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="pageContainer">
+                            <table>
+                                <tbody>
+                                    <tr>
+                                        <td>Page: </td>
+                                        <td><select name="PageList" class="selectors">
+                                                <c:forEach var="i" begin="1" end="${sessionScope.getPages}">
+                                                    <c:choose>
+                                                        <c:when test="${sessionScope.page == i}">
+                                                            <option selected>${i}</option>
+                                                        </c:when>
+                                                        <c:otherwise>
+                                                            <option>${i}</option>
+                                                        </c:otherwise>
+                                                    </c:choose>
 
+                                                </c:forEach>
+                                            </select></td>
+                                        <td>
+                                            <input type="submit" value="Submit" name="buttonClick" class="buttonClass"/>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </c:if>
@@ -69,7 +114,17 @@
                             <table border="0" >
                                 <tbody>
                                     <tr>
-                                        <td><img src='${movie.getPoster()}'></td>
+                                        <td>
+                                            <c:choose>
+                                                <c:when test="${movie.getPoster() != 'N/A'}">
+                                                    <img src='${movie.getPoster()}'>
+                                                </c:when>
+                                                <c:otherwise>
+                                                    <img src='https://davidkoepp.com/wp-content/themes/blankslate/images/Movie%20Placeholder.jpg'>
+                                                </c:otherwise>
+                                            </c:choose>
+
+                                        </td>
                                         <td>
                                             <table border="0" class="textTable">
                                                 <thead>
@@ -94,7 +149,7 @@
                                 </tbody>
                             </table>
                             <div class="buttonDirection">
-                                <input type="submit" value="Details"/>
+                                <input type="submit" value="Details" class="buttonClass"/>
                             </div>
                         </div>
                     </c:forEach>

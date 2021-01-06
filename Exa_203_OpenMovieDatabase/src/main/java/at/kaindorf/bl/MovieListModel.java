@@ -19,19 +19,24 @@ import java.util.concurrent.locks.Condition;
 public class MovieListModel {
 
     public void sortList(List<Movie> movieList, String condition) {
-        switch (condition) {
-            case "Title":
-                movieList.sort(Comparator.comparing(Movie::getTitle));
-                break;
+        try {
+            switch (condition) {
+                case "Title":
+                    movieList.sort(Comparator.comparing(Movie::getTitle));
+                    break;
 
-            case "Realease":
-                movieList.sort(Comparator.comparing(Movie::getDays).reversed());
-                break;
+                case "Realease":
+                    movieList.sort(Comparator.comparing(Movie::getDays).reversed());
+                    break;
 
-            default:
-                movieList.sort(Comparator.comparing(Movie::getId));
-                break;
+                default:
+                    movieList.sort(Comparator.comparing(Movie::getId));
+                    break;
+            }
+        } catch (NullPointerException ex) {
+            movieList.sort(Comparator.comparing(Movie::getYear));
         }
+
     }
 
     public Set<String> getGenres(List<Movie> movieList) {
@@ -44,8 +49,8 @@ public class MovieListModel {
         }
         return genres;
     }
-    
-    public void filterList (List<Movie> movieList, String condition) {       
+
+    public void filterList(List<Movie> movieList, String condition) {
         if (condition.equals("<None>")) {
             condition = "";
         }

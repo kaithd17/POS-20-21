@@ -25,6 +25,7 @@ import java.util.stream.Collectors;
  */
 @WebServlet(name = "MovieController", urlPatterns = {"/MovieController"})
 public class MovieController extends HttpServlet {
+
     MovieListModel mlm = new MovieListModel();
 
     /**
@@ -79,45 +80,70 @@ public class MovieController extends HttpServlet {
             String condition = "";
             List<Movie> movieList = new ArrayList<>();
             List<Movie> allMovies = new ArrayList<>();
+            int pages = 0;
 
             switch (buttonName) {
                 case "Search":
                     String movieName = request.getParameter("searchField");
                     movieList = IOHandler.getAllMovies(movieName, 1);
                     allMovies = movieList.stream().map(m -> m.clone()).collect(Collectors.toList());
-                    
+                    pages = IOHandler.getPages(movieName);
+
                     //set Attributes
+                    request.getSession().setAttribute("moviename", movieName);
                     request.getSession().setAttribute("notFiltered", allMovies);
                     request.getSession().setAttribute("movieList", movieList);
                     request.getSession().setAttribute("movieSelected", true);
                     request.getSession().setAttribute("userInput", movieName);
                     request.getSession().setAttribute("genreSet", mlm.getGenres(movieList));
+                    request.getSession().setAttribute("getPages", pages);
                     break;
                     
+                case "Submit":
+                    String movieNameCopy = (String) request.getSession().getAttribute("moviename");
+                    int page = Integer.parseInt((String) request.getParameter("PageList"));
+                    movieList = IOHandler.getAllMovies(movieNameCopy, page);
+                    allMovies = movieList.stream().map(m -> m.clone()).collect(Collectors.toList());
+                    pages = IOHandler.getPages(movieNameCopy);
+
+                    //set Attributes
+                    request.getSession().setAttribute("notFiltered", allMovies);
+                    request.getSession().setAttribute("movieList", movieList);
+                    request.getSession().setAttribute("movieSelected", true);
+                    request.getSession().setAttribute("genreSet", mlm.getGenres(movieList));
+                    request.getSession().setAttribute("getPages", pages);
+                    request.getSession().setAttribute("page", page+"");
+                    break;
+
                 case "Sort":
                     movieList = (List<Movie>) request.getSession().getAttribute("movieList");
                     condition = request.getParameter("sortList");
                     mlm.sortList(movieList, condition);
-                    request.setAttribute("movieList", movieList);
-                    break;
-                    
-                case "Filter":
-                    condition = request.getParameter("filterList");
-                    allMovies = (List<Movie>) request.getSession().getAttribute("notFiltered");
-                    movieList = allMovies.stream().map(m -> m.clone()).collect(Collectors.toList());
-                    System.out.println(movieList.size());
-                    mlm.filterList(movieList, condition);
                     
                     //set Attributes
                     request.getSession().setAttribute("movieList", movieList);
+                    request.getSession().setAttribute("sortCondition", condition);
+                    break;
+
+                case "Filter":
+                    condition = request.getParameter("filterList");
+                    String sortCondition = (String) request.getSession().getAttribute("sortCondition");
+                    allMovies = (List<Movie>) request.getSession().getAttribute("notFiltered");
+                    movieList = allMovies.stream().map(m -> m.clone()).collect(Collectors.toList());
+                    mlm.filterList(movieList, condition);
+                    mlm.sortList(movieList, sortCondition);
+
+                    //set Attributes
+                    request.getSession().setAttribute("movieList", movieList);
                     request.getSession().setAttribute("notFiltered", allMovies);
+                    request.getSession().setAttribute("filterCondition", condition);
                     break;
             }
-           
-        } catch (NullPointerException ex) {
 
+        } catch (NullPointerException ex) {
+            System.out.println("lol");
         }
-         processRequest(request, response);
+        processRequest(request, response);
     }
 
     /**

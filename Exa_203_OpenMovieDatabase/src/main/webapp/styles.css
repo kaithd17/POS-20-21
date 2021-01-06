@@ -17,9 +17,9 @@ html {
     padding: 0px;
     margin: 0px;
     font-family: 'Raleway';
-    background-color: #1E1E24;
-    /*111D4A option 1
-    #FFCF99 option 2*/
+    background: linear-gradient(to bottom, #1E1E24 43%,#FFCF99);    
+    background-repeat: no-repeat;
+    background-attachment: fixed;
 }
 
 
@@ -32,7 +32,6 @@ h1 {
 .header {
     height: auto;
     width: 100%;
-    background-color: #1E1E24;
     display: flex;
     justify-content: center;
     align-content: center;
@@ -42,7 +41,6 @@ h1 {
 .searchContainer {
     height: auto;
     width: 100%;
-    background-color: #1E1E24;
     display: flex;
     justify-content: center;
     align-content: center;
@@ -83,7 +81,7 @@ h1 {
     flex-direction: column;
 }
 
-.movieObject{
+.movieObject {
     height: auto;
     min-width: 50%;
     max-width: 50%;
@@ -92,6 +90,12 @@ h1 {
     margin-bottom: 2%;
     background-color: #92140C;
     color: #FFF8F0;
+}
+
+@media only  screen and (max-width: 834px) {
+    .movieObject {
+        font-size: 0.44em; 
+    }
 }
 
 img {
@@ -133,10 +137,7 @@ img {
     display: flex;
     justify-content: flex-start;
     align-content: flex-start;
-}
-
-.buttonClass {
-
+    padding-top: 2%;
 }
 
 .buttonFilter {
@@ -145,4 +146,61 @@ img {
 
 .buttonSort {
     padding-left: 6%;
+}
+
+.pageContainer {
+    color: white;
+}
+
+.textfield {
+    border: 0px;
+    outline: 0px;
+    box-sizing: border-box;
+    padding: 6px 8px;
+}
+
+.buttonClass {
+    background-color: black;
+    color: white;
+    transition: all 300ms;
+    cursor: pointer;
+    border: none;
+    padding: 6px 8px;
+    font-size: 15px;
+    border-radius: 7px;
+}
+
+.buttonClass2 {
+    background-color: #6FB4DA;
+    color: white;
+    transition: all 300ms;
+    cursor: pointer;
+    border: none;
+    padding: 6px 8px;
+    font-size: 15px;
+    border-radius: 5px;
+    margin-left: 0.5%;
+}
+
+.selectors {
+    border: 0px;
+    outline: 0px;
+    box-sizing: border-box;
+    border-bottom: solid 3px black;
+    cursor: pointer;
+    padding: 3px 4px;
+}
+
+input:focus {
+    outline: none !important;
+}
+
+.buttonClass:hover {
+    background-color: white;
+    color: black;
+}
+
+.buttonClass2:hover {
+    background-color: white;
+    color: black;
 }
