@@ -195,6 +195,10 @@ input:focus {
     outline: none !important;
 }
 
+button:focus {
+    outline: none !important;
+}
+
 .buttonClass:hover {
     background-color: white;
     color: black;

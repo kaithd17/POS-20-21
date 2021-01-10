@@ -6,7 +6,7 @@
 package at.kaindorf.controller;
 
 import at.kaindorf.bl.MovieListModel;
-import at.kaindorf.io.IOHandler;
+import at.kaindorf.json.JSONAccess;
 import java.io.IOException;
 import java.util.List;
 import javax.servlet.ServletConfig;
@@ -76,18 +76,18 @@ public class MovieController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         try {
-            String buttonName = request.getParameter("buttonClick");
+            String buttonValue = request.getParameter("buttonClick");
             String condition = "";
             List<Movie> movieList = new ArrayList<>();
             List<Movie> allMovies = new ArrayList<>();
             int pages = 0;
 
-            switch (buttonName) {
+            switch (buttonValue) {
                 case "Search":
                     String movieName = request.getParameter("searchField");
-                    movieList = IOHandler.getAllMovies(movieName, 1);
+                    movieList = JSONAccess.getAllMovies(movieName, 1);
                     allMovies = movieList.stream().map(m -> m.clone()).collect(Collectors.toList());
-                    pages = IOHandler.getPages(movieName);
+                    pages = JSONAccess.getPages(movieName);
 
                     //set Attributes
                     request.getSession().setAttribute("moviename", movieName);
@@ -97,14 +97,17 @@ public class MovieController extends HttpServlet {
                     request.getSession().setAttribute("userInput", movieName);
                     request.getSession().setAttribute("genreSet", mlm.getGenres(movieList));
                     request.getSession().setAttribute("getPages", pages);
+                    request.getSession().setAttribute("page", "");
+                    request.getSession().setAttribute("filterCondition", "");
+                    request.getSession().setAttribute("sortCondition", "");
                     break;
-                    
+
                 case "Submit":
                     String movieNameCopy = (String) request.getSession().getAttribute("moviename");
                     int page = Integer.parseInt((String) request.getParameter("PageList"));
-                    movieList = IOHandler.getAllMovies(movieNameCopy, page);
+                    movieList = JSONAccess.getAllMovies(movieNameCopy, page);
                     allMovies = movieList.stream().map(m -> m.clone()).collect(Collectors.toList());
-                    pages = IOHandler.getPages(movieNameCopy);
+                    pages = JSONAccess.getPages(movieNameCopy);
 
                     //set Attributes
                     request.getSession().setAttribute("notFiltered", allMovies);
@@ -112,14 +115,16 @@ public class MovieController extends HttpServlet {
                     request.getSession().setAttribute("movieSelected", true);
                     request.getSession().setAttribute("genreSet", mlm.getGenres(movieList));
                     request.getSession().setAttribute("getPages", pages);
-                    request.getSession().setAttribute("page", page+"");
+                    request.getSession().setAttribute("page", page + "");
+                    request.getSession().setAttribute("filterCondition", "");
+                    request.getSession().setAttribute("sortCondition", "");
                     break;
 
                 case "Sort":
                     movieList = (List<Movie>) request.getSession().getAttribute("movieList");
                     condition = request.getParameter("sortList");
                     mlm.sortList(movieList, condition);
-                    
+
                     //set Attributes
                     request.getSession().setAttribute("movieList", movieList);
                     request.getSession().setAttribute("sortCondition", condition);
@@ -137,6 +142,13 @@ public class MovieController extends HttpServlet {
                     request.getSession().setAttribute("movieList", movieList);
                     request.getSession().setAttribute("notFiltered", allMovies);
                     request.getSession().setAttribute("filterCondition", condition);
+                    break;
+
+                default:
+                    movieList = (List<Movie>) request.getSession().getAttribute("movieList");
+                    Movie movie = movieList.get(Integer.parseInt(buttonValue));
+                    request.getSession().setAttribute("selectedMovie", movie);
+                    request.getRequestDispatcher("detailView.jsp").forward(request, response);
                     break;
             }
 

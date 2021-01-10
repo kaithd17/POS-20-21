@@ -5,9 +5,12 @@
  */
 package at.kaindorf.pojos;
 
+import at.kaindorf.json.DateDeserializer;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -21,6 +24,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Movie {
+    
+    public static final DateTimeFormatter DTF = DateTimeFormatter.ofPattern("dd.MM.YYYY");
+    
     @JsonIgnore
     private int id;
     @JsonProperty("Title")
@@ -29,7 +35,8 @@ public class Movie {
     private String year;
     @JsonProperty("Rated")
     private String rated;
-    @JsonIgnore
+    @JsonProperty("Released")
+    @JsonDeserialize(using = DateDeserializer.class)
     private LocalDate released;
     @JsonProperty("Runtime")
     private String runtime;
@@ -51,8 +58,6 @@ public class Movie {
     private String awards;
     @JsonProperty("Poster")
     private String poster;
-    @JsonIgnore
-    private String[] ratings;
     @JsonProperty("Metascore")
     private String metascore;
     @JsonProperty("imdbRating")
@@ -64,12 +69,15 @@ public class Movie {
     @JsonProperty("Type")
     private String type;
     
-    public long getDays(){
+    public long getDays() {
         return ChronoUnit.DAYS.between(released, LocalDate.now());
     }
     
     public Movie clone() {
-        return new Movie(id, title, year, rated, released, runtime, genre, director, writer, actors, plot, language, country, awards, poster, ratings, metascore, imdbRating, imdbVotes, imdbID, type);
+        return new Movie(id, title, year, rated, released, runtime, genre, director, writer, actors, plot, language, country, awards, poster, metascore, imdbRating, imdbVotes, imdbID, type);
     }
-
+    
+    public String formatDate() {
+        return String.format("%s", released.format(DTF));
+    }
 }

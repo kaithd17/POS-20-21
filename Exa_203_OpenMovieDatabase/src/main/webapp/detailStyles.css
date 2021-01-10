@@ -1,0 +1,80 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 08.01.2021, 22:37:18
+    Author     : kainz
+*/
+
+@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@100;200;300;400;500&display=swap');
+
+body,
+html {
+    width: 100%;
+    height: auto;
+    padding: 0px;
+    margin: 0px;
+    font-family: 'Raleway';
+    background: linear-gradient(to bottom, #1E1E24 43%,#FFCF99);    
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+
+* {
+    color: #FFF8F0;
+}
+
+h1 {
+    margin: 0px;
+    padding: 0px;
+}
+
+.header {
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    padding: 1% 0px 0px 0px;
+}
+
+.backButton {
+    display: flex;
+    justify-content: flex-start;
+    align-content: flex-start;
+}
+
+.imageContainer {
+    height: auto;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+}
+
+img {
+    height: auto;
+    width: 10%;
+}
+
+.movieDetail {
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    margin-left: 19%;
+}
+
+span {
+    font-weight: bold;
+}
+
+td {
+    padding-top: 1%;
+}
+
+.plotRatingsContainer {
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    max-width: 50%;
+}

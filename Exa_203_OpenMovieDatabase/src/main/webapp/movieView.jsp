@@ -109,7 +109,7 @@
 
             <div class="movieListContainer">
                 <div class="movieList">
-                    <c:forEach var="movie" items="${sessionScope.movieList}">
+                    <c:forEach var="movie" items="${sessionScope.movieList}" varStatus="counter">
                         <div class="movieObject">
                             <table border="0" >
                                 <tbody>
@@ -123,7 +123,6 @@
                                                     <img src='https://davidkoepp.com/wp-content/themes/blankslate/images/Movie%20Placeholder.jpg'>
                                                 </c:otherwise>
                                             </c:choose>
-
                                         </td>
                                         <td>
                                             <table border="0" class="textTable">
@@ -149,7 +148,7 @@
                                 </tbody>
                             </table>
                             <div class="buttonDirection">
-                                <input type="submit" value="Details" class="buttonClass"/>
+                                <button type="submit" value="${counter.index}" name="buttonClick" class="buttonClass">Details</button>
                             </div>
                         </div>
                     </c:forEach>
