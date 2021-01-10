@@ -160,6 +160,7 @@ public class MovieController extends HttpServlet {
         } catch (NullPointerException ex) {
             System.out.println("No Response");
             request.getSession().setAttribute("noResponse", true);
+            request.getSession().setAttribute("movieSelected", false);
         }
         processRequest(request, response);
     }

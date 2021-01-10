@@ -111,55 +111,56 @@
                         </div>
                     </div>
                 </div>
-            </c:if>
 
-            <div class="movieListContainer">
-                <div class="movieList">
-                    <c:forEach var="movie" items="${sessionScope.movieList}" varStatus="counter">
-                        <div class="movieObject">
-                            <table border="0" >
-                                <tbody>
-                                    <tr>
-                                        <td>
-                                            <c:choose>
-                                                <c:when test="${movie.getPoster() != 'N/A'}">
-                                                    <img src='${movie.getPoster()}'>
-                                                </c:when>
-                                                <c:otherwise>
-                                                    <img src='https://davidkoepp.com/wp-content/themes/blankslate/images/Movie%20Placeholder.jpg'>
-                                                </c:otherwise>
-                                            </c:choose>
-                                        </td>
-                                        <td>
-                                            <table border="0" class="textTable">
-                                                <thead>
-                                                    <tr>
-                                                        <th>Title</th>
-                                                        <th>Year</th>
-                                                        <th>Genre</th>
-                                                        <th>Runtime</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <tr>
-                                                        <td class="textSpace"><p class="textClass">${movie.getTitle()}</p></td>
-                                                        <td class="textSpace"><p class="textClass">${movie.getYear()}</p></td>
-                                                        <td class="textSpace"><p class="textClass">${movie.getGenre()}</p></td>
-                                                        <td class="textSpace"><p class="textClass">${movie.getRuntime()}</p></td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
-                                        </td>                                     
-                                    </tr>
-                                </tbody>
-                            </table>
-                            <div class="buttonDirection">
-                                <button type="submit" value="${counter.index}" name="buttonClick" class="buttonClass">Details</button>
+
+                <div class="movieListContainer">
+                    <div class="movieList">
+                        <c:forEach var="movie" items="${sessionScope.movieList}" varStatus="counter">
+                            <div class="movieObject">
+                                <table border="0" >
+                                    <tbody>
+                                        <tr>
+                                            <td>
+                                                <c:choose>
+                                                    <c:when test="${movie.getPoster() != 'N/A'}">
+                                                        <img src='${movie.getPoster()}'>
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        <img src='https://davidkoepp.com/wp-content/themes/blankslate/images/Movie%20Placeholder.jpg'>
+                                                    </c:otherwise>
+                                                </c:choose>
+                                            </td>
+                                            <td>
+                                                <table border="0" class="textTable">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Title</th>
+                                                            <th>Year</th>
+                                                            <th>Genre</th>
+                                                            <th>Runtime</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td class="textSpace"><p class="textClass">${movie.getTitle()}</p></td>
+                                                            <td class="textSpace"><p class="textClass">${movie.getYear()}</p></td>
+                                                            <td class="textSpace"><p class="textClass">${movie.getGenre()}</p></td>
+                                                            <td class="textSpace"><p class="textClass">${movie.getRuntime()}</p></td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </td>                                     
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <div class="buttonDirection">
+                                    <button type="submit" value="${counter.index}" name="buttonClick" class="buttonClass">Details</button>
+                                </div>
                             </div>
-                        </div>
-                    </c:forEach>
+                        </c:forEach>
+                    </div>
                 </div>
-            </div>
+            </c:if>
         </form>
     </body>
 </html>
