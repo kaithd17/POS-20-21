@@ -208,3 +208,14 @@ button:focus {
     background-color: white;
     color: black;
 }
+
+.noResponseContainer {
+    color: #FFF8F0;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    font-weight: bold;
+    font-style: italic;
+}

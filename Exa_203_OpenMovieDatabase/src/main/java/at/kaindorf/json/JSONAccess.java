@@ -81,17 +81,4 @@ public class JSONAccess {
         }
         return 0;
     }
-
-    public static void main(String[] args) {
-        try {
-            List<Movie> movieList = JSONAccess.getAllMovies("Galaxy", 24);
-
-            for (Movie movie : movieList) {
-                System.out.println(movie);
-            }
-        } catch (NullPointerException ex) {
-            System.out.println(ex.getStackTrace());
-            System.out.println("No Results");
-        }
-    }
 }

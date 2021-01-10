@@ -31,6 +31,12 @@
                 <input type="submit" value="Search" name="buttonClick" class="buttonClass2"/>
             </div>
 
+            <c:if test="${sessionScope.noResponse == true}">
+                <div class="noResponseContainer">
+                    <h2>No Results!</h2>
+                </div>
+            </c:if>
+
             <c:if test="${sessionScope.movieSelected}">
                 <div class="controllerContainer">
                     <div class="controller">
@@ -153,7 +159,6 @@
                         </div>
                     </c:forEach>
                 </div>
-
             </div>
         </form>
     </body>

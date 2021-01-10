@@ -100,6 +100,7 @@ public class MovieController extends HttpServlet {
                     request.getSession().setAttribute("page", "");
                     request.getSession().setAttribute("filterCondition", "");
                     request.getSession().setAttribute("sortCondition", "");
+                    request.getSession().setAttribute("noResponse", false);
                     break;
 
                 case "Submit":
@@ -147,13 +148,18 @@ public class MovieController extends HttpServlet {
                 default:
                     movieList = (List<Movie>) request.getSession().getAttribute("movieList");
                     Movie movie = movieList.get(Integer.parseInt(buttonValue));
+                    
+                    //set Attributes
                     request.getSession().setAttribute("selectedMovie", movie);
+                    
+                    //forward to new Page
                     request.getRequestDispatcher("detailView.jsp").forward(request, response);
                     break;
             }
 
         } catch (NullPointerException ex) {
-            System.out.println("lol");
+            System.out.println("No Response");
+            request.getSession().setAttribute("noResponse", true);
         }
         processRequest(request, response);
     }
