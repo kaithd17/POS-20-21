@@ -3,12 +3,18 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package at.kaindorf.gui;
+package at.kaindorf.ini.gui;
 
-import at.kaindorf.domintro.xml.XMLIniApp;
+import at.kaindorf.ini.xml.XMLIniApp;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import javax.swing.JDialog;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.TransformerException;
 import org.xml.sax.SAXException;
 
 /**
@@ -35,8 +41,23 @@ public class IniAppGUI extends javax.swing.JFrame {
         } catch (ParserConfigurationException ex) {
             System.out.println(ex.toString());
         }
-        
+
         xmlia.initWindow(this, "start");
+        this.addComponentListener(new ComponentAdapter() {
+            @Override
+            public void componentResized(ComponentEvent e) {
+                if (e.getComponent() instanceof JFrame) {
+                    xmlia.updateWindow((JFrame) e.getComponent(), "start");
+                }
+            }
+
+            @Override
+            public void componentMoved(ComponentEvent e) {
+                if (e.getComponent() instanceof JFrame) {
+                    xmlia.updateWindow((JFrame) e.getComponent(), "start");
+                }
+            }
+        });
     }
 
     /**
@@ -48,22 +69,30 @@ public class IniAppGUI extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        bgButtons = new javax.swing.ButtonGroup();
         jLabel1 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         btNewWindow = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
+        rbFrame = new javax.swing.JRadioButton();
         jLabel2 = new javax.swing.JLabel();
+        rbDialog = new javax.swing.JRadioButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                onWindowClosed(evt);
+            }
+        });
         getContentPane().setLayout(new java.awt.GridLayout(3, 3));
         getContentPane().add(jLabel1);
         getContentPane().add(jLabel3);
         getContentPane().add(jLabel4);
         getContentPane().add(jLabel6);
 
-        btNewWindow.setText("New Window");
+        btNewWindow.setText("Get Window");
         btNewWindow.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 onNewWindow(evt);
@@ -71,14 +100,80 @@ public class IniAppGUI extends javax.swing.JFrame {
         });
         getContentPane().add(btNewWindow);
         getContentPane().add(jLabel5);
+
+        bgButtons.add(rbFrame);
+        rbFrame.setSelected(true);
+        rbFrame.setText("JFrame");
+        getContentPane().add(rbFrame);
         getContentPane().add(jLabel2);
+
+        bgButtons.add(rbDialog);
+        rbDialog.setText("JDialog");
+        getContentPane().add(rbDialog);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void onNewWindow(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_onNewWindow
-       // String name = JOptionPane.showInputDialog("Fensternamen eingeben: ");
+        String windowName = JOptionPane.showInputDialog("Bitte Fenstername eingeben: ");
+
+        if (rbFrame.isSelected()) {
+            windowName += " (JFrame)";
+            final String windowNameFinal = windowName;
+            JFrame jframe = new JFrame(windowName);
+            xmlia.initWindow(jframe, windowName);
+
+            jframe.addComponentListener(new ComponentAdapter() {
+                @Override
+                public void componentResized(ComponentEvent e) {
+                    if (e.getComponent() instanceof JFrame) {
+                        xmlia.updateWindow((JFrame) e.getComponent(), windowNameFinal);
+                    }
+                }
+
+                @Override
+                public void componentMoved(ComponentEvent e) {
+                    if (e.getComponent() instanceof JFrame) {
+                        xmlia.updateWindow((JFrame) e.getComponent(), windowNameFinal);
+                    }
+                }
+            });
+            jframe.setVisible(true);
+        } else {
+            windowName += " (JDialog)";
+            final String windowNameFinal = windowName;
+            JDialog jdialog = new JDialog();
+            xmlia.initWindow(jdialog, windowName);
+
+            jdialog.addComponentListener(new ComponentAdapter() {
+                @Override
+                public void componentResized(ComponentEvent e) {
+                    if (e.getComponent() instanceof JDialog) {
+                        xmlia.updateWindow((JDialog) e.getComponent(), windowNameFinal);
+                    }
+                }
+
+                @Override
+                public void componentMoved(ComponentEvent e) {
+                    if (e.getComponent() instanceof JDialog) {
+                        xmlia.updateWindow((JDialog) e.getComponent(), windowNameFinal);
+                    }
+                }
+            });
+            jdialog.setVisible(true);
+        }
+
     }//GEN-LAST:event_onNewWindow
+
+    private void onWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_onWindowClosed
+        try {
+            xmlia.saveIniFile();
+        } catch (TransformerException ex) {
+            System.out.println(ex.toString());
+        } catch (FileNotFoundException ex) {
+            System.out.println(ex.toString());
+        }
+    }//GEN-LAST:event_onWindowClosed
 
     /**
      * @param args the command line arguments
@@ -116,6 +211,7 @@ public class IniAppGUI extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.ButtonGroup bgButtons;
     private javax.swing.JButton btNewWindow;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -123,5 +219,7 @@ public class IniAppGUI extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JRadioButton rbDialog;
+    private javax.swing.JRadioButton rbFrame;
     // End of variables declaration//GEN-END:variables
 }

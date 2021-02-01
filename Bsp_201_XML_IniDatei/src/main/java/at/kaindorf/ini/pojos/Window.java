@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package at.kaindorf.pojos;
+package at.kaindorf.ini.pojos;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

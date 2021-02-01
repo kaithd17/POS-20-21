@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<windows>
+    <window name="start">
+        <xpos>920</xpos>
+        <ypos>292</ypos>
+        <width>351</width>
+        <height>185</height>
+    </window>
+    <window name="sadf (JFrame)">
+        <xpos>1025</xpos>
+        <ypos>618</ypos>
+        <width>405</width>
+        <height>176</height>
+    </window>
+    <window name="Dialog (JDialog)">
+        <xpos>1409</xpos>
+        <ypos>122</ypos>
+        <width>315</width>
+        <height>237</height>
+    </window>
+</windows>
