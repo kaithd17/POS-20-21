@@ -7,8 +7,8 @@
         <height>185</height>
     </window>
     <window name="sadf (JFrame)">
-        <xpos>1025</xpos>
-        <ypos>618</ypos>
+        <xpos>320</xpos>
+        <ypos>410</ypos>
         <width>405</width>
         <height>176</height>
     </window>
@@ -17,5 +17,11 @@
         <ypos>122</ypos>
         <width>315</width>
         <height>237</height>
+    </window>
+    <window name="dfdfdf (JFrame)">
+        <xpos>479</xpos>
+        <ypos>585</ypos>
+        <width>382</width>
+        <height>150</height>
     </window>
 </windows>

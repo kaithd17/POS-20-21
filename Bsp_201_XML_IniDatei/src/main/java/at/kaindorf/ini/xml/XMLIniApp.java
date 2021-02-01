@@ -123,9 +123,6 @@ public class XMLIniApp {
 
     public void initWindow(JDialog jdialog, String name) {
         boolean newWindow = true;
-        for (Window window : windowList) {
-            System.out.println(window);
-        }
         Window window = null;
         if (windowList.size() == 0) {
             window = new Window(name, DEFAULT_XPOS, DEFAULT_YPOS, DEFAULT_WIDTH, DEFAULT_HEIGHT);
@@ -175,7 +172,7 @@ public class XMLIniApp {
             insertWindow(window, window.getName());
         }
 
-        if (!fileExists) {
+        if (fileExists) {
             //if file exists --> clear file
             PrintWriter writer = new PrintWriter(xmlFilePath.toFile());
             writer.print("");
