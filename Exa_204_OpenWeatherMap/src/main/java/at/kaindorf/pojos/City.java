@@ -5,6 +5,9 @@
  */
 package at.kaindorf.pojos;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlAttribute;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -16,11 +19,14 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@XmlAccessorType(XmlAccessType.FIELD)
 public class City {
-    private int cityId;
-    private String cityName;
+    @XmlAttribute
+    private int id;
+    @XmlAttribute
+    private String name;
     private String country;
     private String timezone;
     private Sun sun;
-    private Coordinates coordinates;
+    private Coordinate coord;
 }

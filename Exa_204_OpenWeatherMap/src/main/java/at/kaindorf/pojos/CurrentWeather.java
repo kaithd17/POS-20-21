@@ -18,7 +18,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class CurrentWeather {
     private City city;
-    private Cloud cloud;
+    private Clouds clouds;
     private Humidity humidity;
     private Pressure pressure;
     private Temperature temperature;

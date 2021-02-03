@@ -29,6 +29,7 @@ import lombok.EqualsAndHashCode;
 @RequiredArgsConstructor
 @NoArgsConstructor
 @XmlRootElement
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Student {
 
     @NonNull

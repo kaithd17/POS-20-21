@@ -32,7 +32,7 @@ public class JAXBTester {
 
             //V2
             //JAXB.marshal(student, System.out);
-           // JAXB.marshal(student, System.out);
+           JAXB.marshal(student, System.out);
         } catch (Exception ex) {
             ex.printStackTrace();
         }
