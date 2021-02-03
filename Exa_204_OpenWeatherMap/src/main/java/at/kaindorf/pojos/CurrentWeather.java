@@ -16,7 +16,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Weather {
+public class CurrentWeather {
     private City city;
     private Cloud cloud;
     private Humidity humidity;

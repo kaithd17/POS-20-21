@@ -5,6 +5,7 @@
  */
 package at.kaindorf.pojos;
 
+import java.time.LocalDate;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -13,14 +14,10 @@ import lombok.NoArgsConstructor;
  *
  * @author kainz
  */
-@Data
+@Data 
 @AllArgsConstructor
 @NoArgsConstructor
-public class City {
-    private int cityId;
-    private String cityName;
-    private String country;
-    private String timezone;
-    private Sun sun;
-    private Coordinates coordinates;
+public class Sun {
+    private LocalDate sunRise;
+    private LocalDate sunSet;
 }

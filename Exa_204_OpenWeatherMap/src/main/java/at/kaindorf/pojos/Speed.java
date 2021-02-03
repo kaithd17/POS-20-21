@@ -16,11 +16,8 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class City {
-    private int cityId;
-    private String cityName;
-    private String country;
-    private String timezone;
-    private Sun sun;
-    private Coordinates coordinates;
+public class Speed {
+    private double value;
+    private String unit;
+    private String name;
 }

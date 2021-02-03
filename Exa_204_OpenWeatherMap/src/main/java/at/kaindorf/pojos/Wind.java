@@ -17,9 +17,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Wind {
-    private double speedValue;
-    private String speedUnit;
-    private String speedName;
+    private Speed speed;
+    private Direction direction;
     private String gusts;
-    private String direction;
 }
