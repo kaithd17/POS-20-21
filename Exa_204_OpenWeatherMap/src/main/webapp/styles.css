@@ -8,3 +8,212 @@ and open the template in the editor.
     Author     : kainz
 */
 
+@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@100;200;300;400;500&display=swap');
+
+
+body,
+html {
+    height: 100%;
+    width: 100%;
+    padding: 0px;
+    margin: 0px;
+    background-color: #39A9DB;
+    font-family: 'Raleway';
+}
+
+h1 {
+    padding: 0px;
+    margin: 0px;
+    color: #FFF8F0;
+}
+
+.headerContainer {
+    padding-top: 1%;
+    padding-bottom: 1%;
+    background-color: #1C77C3;
+}
+
+.header {
+    display: flex;
+    justify-content: center;
+    align-content: center;
+}
+
+.selectorContainer {
+    padding-top: 1%;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+}
+
+.inputContainer {
+    padding-top: 2%;
+}
+
+.inputClass {
+    display: flex;
+    justify-content: center;
+    align-content: center;
+}
+
+.inputField {
+    border: 0px;
+    outline: 0px;
+    box-sizing: border-box;
+    border-bottom: solid 3px black;
+    padding: 8px 17px;
+    border-top-left-radius: 7px;
+    border-bottom-left-radius: 7px;
+}
+
+.languageSelector {
+    border: 0px;
+    outline: 0px;
+    box-sizing: border-box;
+    border-bottom: solid 3px black;
+    padding: 6px 8px;
+    border-radius: 7px;
+    cursor: pointer;
+}
+
+.searchButton {
+    background-color: black;
+    color: white;
+    transition: all 300ms;
+    cursor: pointer;
+    border: none;
+    padding: 8px 8px;
+    font-size: 15px;
+    border-top-right-radius: 7px;
+    border-bottom-right-radius: 7px;
+}
+
+input:focus {
+    outline: none !important;
+}
+
+button:focus {
+    outline: none !important;
+}
+
+.searchButton:hover {
+    background-color: #505050;
+    color: white;
+}
+
+.viewContainer {
+    padding-top: 3%;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+}
+
+.weatherDetailObject {
+    height: auto;
+    min-width: 28%;
+    max-width: 28%;
+    padding: 1.3%;
+    box-shadow: 2px 2px 10px lightgrey;
+    background-color: rgba(28, 119, 195, 0.4);
+    color: #FFF8F0;
+}
+
+.detailView {
+    display: flex;
+    justify-content: center;
+    align-content: center;
+}
+
+ul {
+    margin: 0px;
+}
+
+td {
+    padding-left: 3%;
+}
+
+.rightSide {
+    padding-left: 15%;
+}
+
+h2 {
+    text-align: center;
+    color: black;
+    padding-top: 0px;
+}
+
+@media only  screen and (max-width: 1270px) {
+    .detailView {
+        font-size: 0.9em; 
+    }
+    .weatherDetailObject {
+        height: auto;
+        min-width: 35%;
+        max-width: 35%;
+        padding: 1.3%;
+        box-shadow: 2px 2px 10px lightgrey;
+        background-color: rgba(28, 119, 195, 0.4);
+        color: #FFF8F0;
+    }
+    .listHeader {
+        font-weight: bold;
+        font-size: 1em;
+        color: darkgray;
+    }
+}
+
+@media only  screen and (max-width: 982px) {
+    .detailView {
+        font-size: 0.7em; 
+    }
+    .weatherDetailObject {
+        height: auto;
+        min-width: 60%;
+        max-width: 60%;
+        padding: 1.3%;
+        box-shadow: 2px 2px 10px lightgrey;
+        background-color: rgba(28, 119, 195, 0.4);
+        color: #FFF8F0;
+    }
+    .listHeader {
+        font-weight: bold;
+        font-size: 0.8em;
+        color: darkgray;
+    }
+}
+
+@media only  screen and (max-width: 500px) {
+    .detailView {
+        font-size: 0.7em; 
+    }
+    .weatherDetailObject {
+        height: auto;
+        min-width: 70%;
+        max-width: 70%;
+        padding: 1.3%;
+        box-shadow: 2px 2px 10px lightgrey;
+        background-color: rgba(28, 119, 195, 0.4);
+        color: #FFF8F0;
+    }
+    .listHeader {
+        font-weight: bold;
+        font-size: 0.8em;
+        color: darkgray;
+    }
+}
+
+.listHeader {
+    font-weight: bold;
+    font-size: 16px;
+    color: darkgray;
+}
+
+img {
+    height: auto;
+    width: 30%;
+    padding-left: 20%;
+}
+
+span {
+    padding-right: 0.5%;
+}

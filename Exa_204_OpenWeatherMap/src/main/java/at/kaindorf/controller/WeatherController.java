@@ -5,13 +5,18 @@
  */
 package at.kaindorf.controller;
 
+import at.kaindorf.io.IOHandler;
+import at.kaindorf.xml.XML_Access;
 import java.io.IOException;
-import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import at.kaindorf.pojos.CurrentWeather;
+import java.util.ArrayList;
+import java.util.List;
+import javax.servlet.ServletConfig;
 
 /**
  *
@@ -19,6 +24,9 @@ import javax.servlet.http.HttpServletResponse;
  */
 @WebServlet(name = "WeatherController", urlPatterns = {"/WeatherController"})
 public class WeatherController extends HttpServlet {
+
+    private String relativePath;
+    private String relativePath2;
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -29,9 +37,17 @@ public class WeatherController extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+
+    @Override
+    public void init(ServletConfig config) throws ServletException {
+        super.init(config);
+        relativePath = this.getServletContext().getRealPath("/at.kaindorf.res/de.csv");
+        relativePath2 = this.getServletContext().getRealPath("/at.kaindorf.res/en.csv");
+    }
+
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        request.getRequestDispatcher("weatherView.jsp").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -58,8 +74,62 @@ public class WeatherController extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        boolean failure = false;
+        boolean responseState = false;
+        boolean gusts = false;
+        String language = "";
+        String searchString = "";
+        List<String> languageList = new ArrayList<>();
+        
+        if (request.getParameter("searchButton") != null) {
+            try {
+                responseState = true;
+                failure = false;
+                
+                if (request.getParameter("languageList") == null) {
+                    language = "Deutsch";
+                } else {
+                    language = request.getParameter("languageList");
+                }
+                
+                searchString = request.getParameter("inputField");
+                CurrentWeather weather = XML_Access.getCurrentWeather(searchString, language);
+                if (!weather.getWind().getGusts().equals("")) {
+                    gusts = true;
+                }
+                
+                languageList = IOHandler.getLanguage(relativePath);
+
+                //Set Attributes
+                request.getSession().setAttribute("currentWeather", weather);
+                request.getSession().setAttribute("failure", failure);
+                request.getSession().setAttribute("responseState", responseState);
+                request.getSession().setAttribute("gusts", gusts);
+                request.getSession().setAttribute("currentLanguage", "Deutsch");
+                request.getSession().setAttribute("languageList", languageList);
+            } catch (Exception ex) {
+                failure = true;
+                responseState = false;
+                request.getSession().setAttribute("failure", failure);
+                request.getSession().setAttribute("responseState", responseState);
+                request.getSession().setAttribute("currentLanguage", "Deutsch");
+            }
+        } else if (request.getParameter("languageList") != null) {
+            String currentLanguage = request.getParameter("languageList");
+            CurrentWeather weather = (CurrentWeather) request.getSession().getAttribute("currentWeather");
+            
+            
+            if (currentLanguage.equals("Deutsch")) {
+                languageList = IOHandler.getLanguage(relativePath);
+            } else {
+                languageList = IOHandler.getLanguage(relativePath2);
+            }
+
+            //set Attributes
+            request.getSession().setAttribute("currentLanguage", currentLanguage);
+            request.getSession().setAttribute("languageList", languageList);
+        }
         processRequest(request, response);
     }
 
