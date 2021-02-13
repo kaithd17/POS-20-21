@@ -37,7 +37,6 @@ public class WeatherController extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-
     @Override
     public void init(ServletConfig config) throws ServletException {
         super.init(config);
@@ -77,36 +76,40 @@ public class WeatherController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         boolean failure = false;
         boolean responseState = false;
-        boolean gusts = false;
+        boolean noGusts = false;
         String language = "";
         String searchString = "";
         List<String> languageList = new ArrayList<>();
-        
+
         if (request.getParameter("searchButton") != null) {
             try {
                 responseState = true;
                 failure = false;
-                
+
                 if (request.getParameter("languageList") == null) {
                     language = "Deutsch";
+                    request.getSession().setAttribute("currentLanguage", "Deutsch");
                 } else {
                     language = request.getParameter("languageList");
+                    request.getSession().setAttribute("currentLanguage", language);
                 }
-                
                 searchString = request.getParameter("inputField");
                 CurrentWeather weather = XML_Access.getCurrentWeather(searchString, language);
                 if (!weather.getWind().getGusts().equals("")) {
-                    gusts = true;
+                    noGusts = true;
                 }
-                
-                languageList = IOHandler.getLanguage(relativePath);
+
+                if (language.equals("Deutsch")) {
+                    languageList = IOHandler.getLanguage(relativePath);
+                } else {
+                    languageList = IOHandler.getLanguage(relativePath2);
+                }
 
                 //Set Attributes
                 request.getSession().setAttribute("currentWeather", weather);
                 request.getSession().setAttribute("failure", failure);
                 request.getSession().setAttribute("responseState", responseState);
-                request.getSession().setAttribute("gusts", gusts);
-                request.getSession().setAttribute("currentLanguage", "Deutsch");
+                request.getSession().setAttribute("gusts", noGusts);
                 request.getSession().setAttribute("languageList", languageList);
             } catch (Exception ex) {
                 failure = true;
@@ -115,20 +118,23 @@ public class WeatherController extends HttpServlet {
                 request.getSession().setAttribute("responseState", responseState);
                 request.getSession().setAttribute("currentLanguage", "Deutsch");
             }
+            
         } else if (request.getParameter("languageList") != null) {
             String currentLanguage = request.getParameter("languageList");
             CurrentWeather weather = (CurrentWeather) request.getSession().getAttribute("currentWeather");
-            
-            
+
             if (currentLanguage.equals("Deutsch")) {
                 languageList = IOHandler.getLanguage(relativePath);
             } else {
                 languageList = IOHandler.getLanguage(relativePath2);
             }
 
+            weather = XML_Access.getCurrentWeather(weather.getCity().getName(), currentLanguage);
+
             //set Attributes
             request.getSession().setAttribute("currentLanguage", currentLanguage);
             request.getSession().setAttribute("languageList", languageList);
+            request.getSession().setAttribute("currentWeather", weather);
         }
         processRequest(request, response);
     }
