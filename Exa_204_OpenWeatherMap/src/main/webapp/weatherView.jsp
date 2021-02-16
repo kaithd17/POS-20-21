@@ -116,7 +116,7 @@
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td><span class="listHeader">${sessionScope.languageList.get(20)}:</span></td>
+                                            <td><span class="listHeader">${sessionScope.languageList.get(20)}</span></td>
                                         </tr>
                                         <tr>
                                             <td>
