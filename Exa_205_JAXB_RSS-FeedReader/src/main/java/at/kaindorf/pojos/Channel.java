@@ -21,7 +21,6 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@XmlRootElement(name="channel")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Channel {
     private String title;

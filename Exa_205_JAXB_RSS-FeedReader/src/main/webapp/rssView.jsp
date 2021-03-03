@@ -4,6 +4,7 @@
     Author     : kainz
 --%>
 
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -12,6 +13,8 @@
         <title>JSP Page</title>
     </head>
     <body>
-        <h1>Hello World!</h1>
+        <form action="RSSController" method="POST">
+            <button type="submit" value="test" name="buttonClick">Presse</button>
+        </form>
     </body>
 </html>
