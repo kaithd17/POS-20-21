@@ -10,11 +10,25 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <title>RSS-Feeds</title>
     </head>
     <body>
         <form action="RSSController" method="POST">
-            <button type="submit" value="test" name="buttonClick">Presse</button>
+            <button type="submit" value="Sport" name="buttonClick">Presse</button>
+            <div class="feedContainer">
+                <div class="feedObject">
+                    <table border="0">
+                        <tbody>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+            <p>${sessionScope.rssObject}</p>
         </form>
     </body>
 </html>

@@ -5,13 +5,14 @@
  */
 package at.kaindorf.controller;
 
+import at.kaindorf.xml.XMLAccess;
 import java.io.IOException;
-import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import at.kaindorf.pojos.Rss;
 
 /**
  *
@@ -59,7 +60,11 @@ public class RSSController extends HttpServlet {
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        System.out.println(request.getParameter("buttonClick"));
+        String buttonText = request.getParameter("buttonClick");
+        Rss rss = XMLAccess.getFeeds(buttonText);
+        
+        //set Attributes
+        request.getSession().setAttribute("rssObject", rss);
         processRequest(request, response);
     }
 

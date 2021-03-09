@@ -5,8 +5,11 @@
  */
 package at.kaindorf.pojos;
 
+import at.kaindorf.xml.DateAdapter;
+import java.time.LocalDateTime;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -23,11 +26,7 @@ public class Item {
     private String title;
     private String link;
     private String description;
-    private String author;
-    private String category;
-    private String comments;
     private String enclosure;
-    private String guid;
-    private String pubData;
-    private String source;
+    @XmlJavaTypeAdapter(DateAdapter.class)
+    private LocalDateTime pubDate;
 }
