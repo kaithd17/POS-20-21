@@ -27,13 +27,13 @@ public class XMLAccess {
             return rssobject;
     }
     
-//    public static void main(String[] args) {
-//        try {
-//            Rss rssobject = XMLAccess.getFeeds("https://www.diepresse.com/rss/home");
-//            System.out.println(rssobject.getChannel().getItemList().get(0));
-//        } catch (IOException ex) {
-//            System.out.println(ex.toString());
-//        }
-//    }
+    public static void main(String[] args) {
+        try {
+            Rss rssobject = XMLAccess.getFeeds("Sport");
+            System.out.println(rssobject.getChannel().getItemList().get(0));
+        } catch (IOException ex) {
+            System.out.println(ex.toString());
+        }
+    }
 
 }

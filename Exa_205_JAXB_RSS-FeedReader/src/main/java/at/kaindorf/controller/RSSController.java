@@ -61,11 +61,14 @@ public class RSSController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String buttonText = request.getParameter("buttonClick");
-        Rss rss = XMLAccess.getFeeds(buttonText);
-        
-        //set Attributes
-        request.getSession().setAttribute("rssObject", rss);
-        processRequest(request, response);
+        if (buttonText != null) {
+            Rss rss = XMLAccess.getFeeds(buttonText);
+            System.out.println(rss);
+
+            //set Attributes
+            request.getSession().setAttribute("rssObject", rss);
+            processRequest(request, response);
+        }
     }
 
     /**
