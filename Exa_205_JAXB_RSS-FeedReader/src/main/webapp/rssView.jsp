@@ -16,14 +16,13 @@
     </head>
     <body>
         <form action="RSSController" method="POST">
-            <button type="submit" value="Sport" name="buttonClick">Presse</button>
             <div class="header">
                 <h1>${sessionScope.rssFeed.channel.title}</h1>
             </div>
             <div class="header">
-                <button class="buttonClass" value="showAll" name="buttonClick">show all</button>
+                <button class="buttonClass" value="showAll" name="buttonClick">Show All</button>
+                <button class="buttonClass" value="back" name="buttonClick">Back</button>
             </div>
-
             <div class="feedContainer">
                 <div class="feedList">
                     <c:forEach var="item" items="${sessionScope.rssFeed.channel.itemList}">

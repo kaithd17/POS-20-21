@@ -18,6 +18,7 @@ html {
     padding: 0px;
     margin: 0px;
     font-family: 'Raleway';
+    background-color: lightgrey;
 }
 
 .feedContainer {
@@ -117,4 +118,52 @@ td {
 
 h1 {
     color: #FFF8F0;
+}
+
+.listContainer {
+    padding-top: 2%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.inputContainer {
+    padding-top: 2%;
+}
+
+.inputClass {
+    display: flex;
+    justify-content: center;
+    align-content: center;
+}
+
+.inputField {
+    border: 0px;
+    outline: 0px;
+    box-sizing: border-box;
+    border-bottom: solid 3px black;
+    padding: 8px 17px;
+    border-top-left-radius: 7px;
+    border-bottom-left-radius: 7px;
+}
+
+input:focus {
+    outline: none !important;
+}
+
+.subcribeButton {
+    background-color: black;
+    color: white;
+    transition: all 300ms;
+    cursor: pointer;
+    border: none;
+    padding: 8px 8px;
+    font-size: 15px;
+    border-top-right-radius: 7px;
+    border-bottom-right-radius: 7px;
+}
+
+.subcribeButton:hover {
+    background-color: white;
+    color: black;
 }

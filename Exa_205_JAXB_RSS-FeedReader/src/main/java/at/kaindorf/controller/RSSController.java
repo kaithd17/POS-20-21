@@ -37,7 +37,15 @@ public class RSSController extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        request.getRequestDispatcher("rssView.jsp").forward(request, response);
+        if (request.getSession().getAttribute("rssList") == null) {
+            List<Rss> rssList = new ArrayList<>();
+            rssList.add(XMLAccess.getFeeds("https://www.diepresse.com/rss/home"));
+            rssList.add(XMLAccess.getFeeds("https://www.diepresse.com/rss/Sport"));
+            rssList.add(XMLAccess.getFeeds("https://www.diepresse.com/rss/Politik"));
+            rssList.add(XMLAccess.getFeeds("https://www.diepresse.com/rss/Kultur"));
+            request.getSession().setAttribute("rssList", rssList);
+        }
+        request.getRequestDispatcher("rssList.jsp").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -50,8 +58,8 @@ public class RSSController extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
         processRequest(request, response);
     }
 
@@ -67,9 +75,24 @@ public class RSSController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String buttonText = request.getParameter("buttonClick");
         List<Item> allItems = new ArrayList<>();
+        List<Rss> rssList = (List<Rss>) request.getSession().getAttribute("rssList");
         Rss rssFeed = new Rss();
 
-        if (buttonText.contains("hide")) {
+        if (buttonText.contains("view")) {
+            buttonText = buttonText.replace("view", "");
+            for (Rss rssObject : rssList) {
+                if (rssObject.getChannel().getTitle().equals(buttonText)) {
+                    rssFeed = rssObject;
+                }
+            }
+            allItems = rssFeed.getChannel().getItemList().stream().map(r -> r.clone()).collect(Collectors.toList());
+
+            //set Attributes
+            request.getSession().setAttribute("rssFeed", rssFeed);
+            request.getSession().setAttribute("allItems", allItems);
+            request.getRequestDispatcher("rssView.jsp").forward(request, response);
+
+        } else if (buttonText.contains("hide")) {
             final String finalStr = buttonText.replace("hide", "");
             //get Feed
             rssFeed = (Rss) request.getSession().getAttribute("rssFeed");
@@ -77,22 +100,21 @@ public class RSSController extends HttpServlet {
 
             //set Attributes
             request.getSession().setAttribute("rssFeed", rssFeed);
+            request.getRequestDispatcher("rssView.jsp").forward(request, response);
+
         } else if (buttonText.contains("read")) {
             String finalStr = buttonText.replace("read", "");
             //get Feed
             rssFeed = (Rss) request.getSession().getAttribute("rssFeed");
             allItems = (List<Item>) request.getSession().getAttribute("allItems");
-            System.out.println(rssFeed.getChannel().getItemList());
 
             for (Item item : rssFeed.getChannel().getItemList()) {
                 if (item.getId() == Integer.parseInt(finalStr)) {
-                    System.out.println(item.isRead());
                     if (item.isRead()) {
                         item.setRead(false);
                     } else {
                         item.setRead(true);
                     }
-                    System.out.println(item.isRead());
                 }
             }
 
@@ -109,29 +131,42 @@ public class RSSController extends HttpServlet {
             //set Attribute
             request.getSession().setAttribute("rssFeed", rssFeed);
             request.getSession().setAttribute("allItems", allItems);
+            request.getRequestDispatcher("rssView.jsp").forward(request, response);
+
         } else if (buttonText.equals("showAll")) {
             //get Attributes
             allItems = (List<Item>) request.getSession().getAttribute("allItems");
             List<Item> itemList = new ArrayList<>();
             rssFeed = (Rss) request.getSession().getAttribute("rssFeed");
-            
-            //Netbeans bug
+
+            //get items
             itemList = allItems.stream().map(r -> r.clone()).collect(Collectors.toList());
             rssFeed.getChannel().getItemList().clear();
             rssFeed.getChannel().getItemList().addAll(itemList);
 
             //set Attribute
             request.getSession().setAttribute("rssFeed", rssFeed);
-        } else {
-            //get Attributes
-            rssFeed = XMLAccess.getFeeds(buttonText);
-            allItems = rssFeed.getChannel().getItemList().stream().map(r -> r.clone()).collect(Collectors.toList());
+            request.getRequestDispatcher("rssView.jsp").forward(request, response);
 
+        } else if (buttonText.equals("back")) {
+            processRequest(request, response);
+
+        } else if (buttonText.equals("subscribe")) {
+            String link = request.getParameter("inputField");
+            try {
+                rssList.add(XMLAccess.getFeeds(link));
+            } catch (Exception ex) {
+                
+            }
+            processRequest(request, response);
+
+        } else if (buttonText.contains("unsubscribe")) {
+            final String finalStr = buttonText.replace("unsubscribe", "");
+            rssList.removeIf(r -> r.getChannel().getTitle().equals(finalStr));
             //set Attributes
-            request.getSession().setAttribute("rssFeed", rssFeed);
-            request.getSession().setAttribute("allItems", allItems);
+            request.getSession().setAttribute("rssList", rssList);
+            processRequest(request, response);
         }
-        processRequest(request, response);
     }
 
     /**
