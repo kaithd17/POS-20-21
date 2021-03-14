@@ -27,14 +27,20 @@ public class Item {
 
     public static final DateTimeFormatter DTF = DateTimeFormatter.ofPattern("dd.MM.YYYY");
 
+    private int id;
     private String title;
     private String link;
     private String description;
     private enclosure enclosure;
+    private boolean read;
     @XmlJavaTypeAdapter(DateAdapter.class)
     private LocalDateTime pubDate;
-
+    
     public String formatDate() {
         return String.format("%s", pubDate.format(DTF));
+    }
+    
+    public Item clone(){
+        return new Item(id, title, link, description, enclosure, read, pubDate);
     }
 }

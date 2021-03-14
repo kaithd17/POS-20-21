@@ -16,17 +16,21 @@ import javax.xml.bind.JAXB;
  * @author kainz
  */
 public class XMLAccess {
-    
-    public static final String BASE_URL_Presse = "https://www.diepresse.com/rss/"; 
-    
+
+    public static final String BASE_URL_Presse = "https://www.diepresse.com/rss/";
+
     public static Rss getFeeds(String urlPart) throws MalformedURLException, IOException {
-            String urlStr = BASE_URL_Presse + urlPart;
-            Rss rssobject = new Rss();
-            URL url = new URL(urlStr);
-            rssobject = JAXB.unmarshal(url, Rss.class);
-            return rssobject;
+        String urlStr = BASE_URL_Presse + urlPart;
+        Rss rssobject = new Rss();
+        URL url = new URL(urlStr);
+        rssobject = JAXB.unmarshal(url, Rss.class);
+        for (int i = 0; i < rssobject.getChannel().getItemList().size(); i++) {
+            rssobject.getChannel().getItemList().get(i).setId(i);
+            rssobject.getChannel().getItemList().get(i).setRead(false);
+        }
+        return rssobject;
     }
-    
+
     public static void main(String[] args) {
         try {
             Rss rssobject = XMLAccess.getFeeds("Sport");

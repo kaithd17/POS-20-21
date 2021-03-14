@@ -13,6 +13,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import at.kaindorf.pojos.Rss;
+import java.util.ArrayList;
+import java.util.List;
+import at.kaindorf.pojos.Item;
+import java.nio.charset.StandardCharsets;
+import java.util.stream.Collectors;
 
 /**
  *
@@ -61,14 +66,72 @@ public class RSSController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String buttonText = request.getParameter("buttonClick");
-        if (buttonText != null) {
-            Rss rss = XMLAccess.getFeeds(buttonText);
-            System.out.println(rss);
+        List<Item> allItems = new ArrayList<>();
+        Rss rssFeed = new Rss();
+
+        if (buttonText.contains("hide")) {
+            final String finalStr = buttonText.replace("hide", "");
+            //get Feed
+            rssFeed = (Rss) request.getSession().getAttribute("rssFeed");
+            rssFeed.getChannel().getItemList().removeIf(r -> r.getId() == Integer.parseInt(finalStr));
 
             //set Attributes
-            request.getSession().setAttribute("rssObject", rss);
-            processRequest(request, response);
+            request.getSession().setAttribute("rssFeed", rssFeed);
+        } else if (buttonText.contains("read")) {
+            String finalStr = buttonText.replace("read", "");
+            //get Feed
+            rssFeed = (Rss) request.getSession().getAttribute("rssFeed");
+            allItems = (List<Item>) request.getSession().getAttribute("allItems");
+            System.out.println(rssFeed.getChannel().getItemList());
+
+            for (Item item : rssFeed.getChannel().getItemList()) {
+                if (item.getId() == Integer.parseInt(finalStr)) {
+                    System.out.println(item.isRead());
+                    if (item.isRead()) {
+                        item.setRead(false);
+                    } else {
+                        item.setRead(true);
+                    }
+                    System.out.println(item.isRead());
+                }
+            }
+
+            for (Item item : allItems) {
+                if (item.getId() == Integer.parseInt(finalStr)) {
+                    if (item.isRead()) {
+                        item.setRead(false);
+                    } else {
+                        item.setRead(true);
+                    }
+                }
+            }
+
+            //set Attribute
+            request.getSession().setAttribute("rssFeed", rssFeed);
+            request.getSession().setAttribute("allItems", allItems);
+        } else if (buttonText.equals("showAll")) {
+            //get Attributes
+            allItems = (List<Item>) request.getSession().getAttribute("allItems");
+            List<Item> itemList = new ArrayList<>();
+            rssFeed = (Rss) request.getSession().getAttribute("rssFeed");
+            
+            //Netbeans bug
+            itemList = allItems.stream().map(r -> r.clone()).collect(Collectors.toList());
+            rssFeed.getChannel().getItemList().clear();
+            rssFeed.getChannel().getItemList().addAll(itemList);
+
+            //set Attribute
+            request.getSession().setAttribute("rssFeed", rssFeed);
+        } else {
+            //get Attributes
+            rssFeed = XMLAccess.getFeeds(buttonText);
+            allItems = rssFeed.getChannel().getItemList().stream().map(r -> r.clone()).collect(Collectors.toList());
+
+            //set Attributes
+            request.getSession().setAttribute("rssFeed", rssFeed);
+            request.getSession().setAttribute("allItems", allItems);
         }
+        processRequest(request, response);
     }
 
     /**

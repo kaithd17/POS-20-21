@@ -10,16 +10,24 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <script src="https://kit.fontawesome.com/8b1b2bee53.js" crossorigin="anonymous"></script>
         <link href="styles.css" rel="stylesheet">
         <title>RSS-Feeds</title>
     </head>
     <body>
         <form action="RSSController" method="POST">
             <button type="submit" value="Sport" name="buttonClick">Presse</button>
+            <div class="header">
+                <h1>${sessionScope.rssFeed.channel.title}</h1>
+            </div>
+            <div class="header">
+                <button class="buttonClass" value="showAll" name="buttonClick">show all</button>
+            </div>
+
             <div class="feedContainer">
                 <div class="feedList">
-                    <c:forEach var="item" items="${sessionScope.rssObject.channel.itemList}">
-                        <div class="feedObject">
+                    <c:forEach var="item" items="${sessionScope.rssFeed.channel.itemList}">
+                        <div class="${item.read == true ? "feedObject2" : "feedObject"}">
                             <table border="0">
                                 <tbody>
                                     <tr>
@@ -37,6 +45,16 @@
                                             <table border="0">
                                                 <thead>
                                                 <th>${item.title}</th>
+                                                    <c:choose>
+                                                        <c:when test="${item.read}">
+                                                        <th><button class="buttonClass" value="read${item.id}" name="buttonClick"><i class="fas fa-bookmark"></i></button></th>
+
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        <th><button class="buttonClass" value="read${item.id}" name="buttonClick"><i class="far fa-bookmark"></i></button></th>
+                                                            </c:otherwise>
+                                                        </c:choose>
+                                                <th><button class="buttonClass" value="hide${item.id}" name="buttonClick"><i class="fas fa-ban"></i></button></th>
                                                 </thead>
                                                 <tbody>
                                                     <tr><td>${item.description}</td></tr>
